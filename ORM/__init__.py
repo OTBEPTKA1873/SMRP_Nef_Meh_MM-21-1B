@@ -11,6 +11,7 @@ from .Cooler import Cooler
 from .Buyer import Buyer
 from .Seller import Seller
 from .Receipt import Receipt
+from .User import User
 
 from .CPU_MB import CPU_MB
 from .GPU_MB import GPU_MB
