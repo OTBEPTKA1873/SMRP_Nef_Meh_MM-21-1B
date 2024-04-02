@@ -7,7 +7,7 @@ from .database_meta import Base
 class Receipt(Base):
     __tablename__ = "Receipt"
 
-    receipt_id = Column(Integer, primary_key=True, nullable=False)
+    receipt_id = Column(Integer, primary_key=True, autoincrement=True)
     lot_id = Column(Integer, ForeignKey("Lot.lot_id"))
     buyer_id = Column(Integer, ForeignKey("Buyer.buyer_id"))
     purchase_date = Column(String(31), primary_key=False, nullable=True)

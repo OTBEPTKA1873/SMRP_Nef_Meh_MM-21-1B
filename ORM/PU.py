@@ -7,7 +7,7 @@ from .database_meta import Base
 class PU(Base):
     __tablename__ = "PU"
 
-    PU_id = Column(String(63), primary_key=True, nullable=False)
+    PU_id = Column(Integer, primary_key=True, autoincrement=True)
     PU_name = Column(String(63), primary_key=False, nullable=False)
     watt = Column(Integer, primary_key=False, nullable=False)
 

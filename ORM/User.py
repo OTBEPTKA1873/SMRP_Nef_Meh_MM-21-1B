@@ -7,7 +7,7 @@ from .database_meta import Base
 class User(Base):
     __tablename__ = "User"
 
-    user_id = Column(Integer, primary_key=True, nullable=False)
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
     user_login = Column(String(31), primary_key=False, nullable=False)
     user_password = Column(String(31), primary_key=False, nullable=False)
 

@@ -7,16 +7,16 @@ from .database_meta import Base
 class Lot(Base):
     __tablename__ = "Lot"
 
-    lot_id = Column(Integer, primary_key=True, nullable=False)
+    lot_id = Column(Integer, primary_key=True, autoincrement=True)
     seller_id = Column(Integer, ForeignKey("Seller.seller_id"))
     price = Column(Float, primary_key=False, nullable=False)
-    GPU_id = Column(String(63), ForeignKey("GPU.GPU_id"))
-    CPU_id = Column(String(63), ForeignKey("CPU.CPU_id"))
-    MB_id = Column(String(63), ForeignKey("MB.MB_name"))
-    RAM_id = Column(String(63), ForeignKey("RAM.RAM_id"))
-    PU_id = Column(String(63), ForeignKey("PU.PU_id"))
-    mem_id = Column(String(63), ForeignKey("Memory.mem_id"))
-    cooler_id = Column(String(63), ForeignKey("Cooler.cooler_id"))
+    GPU_id = Column(Integer, ForeignKey("GPU.GPU_id"))
+    CPU_id = Column(Integer, ForeignKey("CPU.CPU_id"))
+    MB_id = Column(Integer, ForeignKey("MB.MB_name"))
+    RAM_id = Column(Integer, ForeignKey("RAM.RAM_id"))
+    PU_id = Column(Integer, ForeignKey("PU.PU_id"))
+    mem_id = Column(Integer, ForeignKey("Memory.mem_id"))
+    cooler_id = Column(Integer, ForeignKey("Cooler.cooler_id"))
     count = Column(Integer, primary_key=False, nullable=False)
 
     receipts = relationship("Receipt", back_populates="lot")
