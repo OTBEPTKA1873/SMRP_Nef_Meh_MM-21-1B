@@ -12,7 +12,7 @@ class Lot(Base):
     price = Column(Float, primary_key=False, nullable=False)
     GPU_id = Column(Integer, ForeignKey("GPU.GPU_id"))
     CPU_id = Column(Integer, ForeignKey("CPU.CPU_id"))
-    MB_id = Column(Integer, ForeignKey("MB.MB_name"))
+    MB_id = Column(Integer, ForeignKey("MB.MB_id"))
     RAM_id = Column(Integer, ForeignKey("RAM.RAM_id"))
     PU_id = Column(Integer, ForeignKey("PU.PU_id"))
     mem_id = Column(Integer, ForeignKey("Memory.mem_id"))
