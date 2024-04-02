@@ -7,7 +7,7 @@ from .database_meta import Base
 class Cooler(Base):
     __tablename__ = "Cooler"
 
-    cooler_id = Column(String(63), primary_key=True, nullable=False)
+    cooler_id = Column(Integer, primary_key=True, autoincrement=True)
     cooler_name = Column(String(63), primary_key=False, nullable=False)
     socket = Column(String(31), primary_key=False, nullable=False)
     DH = Column(Integer, primary_key=False, nullable=False)

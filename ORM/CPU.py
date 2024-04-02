@@ -7,7 +7,7 @@ from .database_meta import Base
 class CPU(Base):
     __tablename__ = "CPU"
 
-    CPU_id = Column(String(63), primary_key=True, nullable=False)
+    CPU_id = Column(Integer, primary_key=True, autoincrement=True)
     CPU_name = Column(String(63), primary_key=False, nullable=False)
     ALU = Column(Integer, primary_key=False, nullable=False)
     freq = Column(Integer, primary_key=False, nullable=False)

@@ -7,7 +7,7 @@ from .database_meta import Base
 class Memory(Base):
     __tablename__ = "Memory"
 
-    mem_id = Column(String(63), primary_key=True, nullable=False)
+    mem_id = Column(Integer, primary_key=True, autoincrement=True)
     mem_name = Column(String(63), primary_key=False, nullable=False)
     mem_type = Column(String(31), primary_key=False, nullable=False)
     volume = Column(Integer, primary_key=False, nullable=False)

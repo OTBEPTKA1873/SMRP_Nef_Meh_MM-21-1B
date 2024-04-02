@@ -7,8 +7,7 @@ from .database_meta import Base
 class Buyer(Base):
     __tablename__ = "Buyer"
 
-    buyer_id = Column(Integer, primary_key=True, nullable=False)
-    first_name = Column(String(31), primary_key=False, nullable=False)
+    buyer_id = Column(Integer, primary_key=True, autoincrement=True)
 
     receipts = relationship("Receipt", back_populates="buyer")
 

@@ -7,7 +7,7 @@ from .database_meta import Base
 class GPU(Base):
     __tablename__ = "GPU"
 
-    GPU_id = Column(String(63), primary_key=True, nullable=False)
+    GPU_id = Column(Integer, primary_key=True, autoincrement=True)
     GPU_name = Column(String(63), primary_key=False, nullable=False)
     freq = Column(Integer, primary_key=False, nullable=False)
     ALU = Column(Integer, primary_key=False, nullable=False)

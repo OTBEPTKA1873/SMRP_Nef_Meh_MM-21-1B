@@ -1,4 +1,5 @@
 .idea
+main.py
 alembic.ini
-config.py
 migrations
+config.py

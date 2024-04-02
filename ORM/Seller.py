@@ -7,7 +7,7 @@ from .database_meta import Base
 class Seller(Base):
     __tablename__ = "Seller"
 
-    seller_id = Column(Integer, primary_key=True, nullable=False)
+    seller_id = Column(Integer, primary_key=True, autoincrement=True)
 
     lots = relationship("Lot", back_populates="seller")
 
