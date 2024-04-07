@@ -4,3 +4,4 @@ from .ui_buy_lot_form import Ui_Form as UiBuyLotForm
 from .ui_update_lot_form import Ui_Form as UiUpdateLotForm
 from .ui_registration_form import Ui_Form as UiRegistrationForm
 from .ui_receipts_form import Ui_Form as UiReceiptsForm
+from .ui_dialog import Ui_Dialog as UiDialog

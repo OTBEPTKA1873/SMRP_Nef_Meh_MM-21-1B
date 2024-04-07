@@ -96,7 +96,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="push_button_receipts">
       <property name="text">
        <string>История Ваших сделок</string>
       </property>
