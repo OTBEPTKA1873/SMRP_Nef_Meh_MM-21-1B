@@ -2,8 +2,10 @@ from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QDialog
 
 from ORM import get_session, Lot, User
 from ui_qt import UiMainWindow
-from registration_form import Registration
-from add_lot_form import LotAdd
+from .dialog import Dialog
+from .registration_form import Registration
+from .add_lot_form import LotAdd
+from .buy_lot_form import LotBuy
 
 
 class MainWindow(QMainWindow, UiMainWindow):
@@ -28,7 +30,7 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.update_table()
 
     def update_table(self):
-        lots = self.session.query(Lot).orser_by(Lot.id).all()
+        lots = self.session.query(Lot).where(Lot.count > 0).order_by(Lot.lot_id).all()
         self.tableWidget.setRowCount(0)
         for lot in lots:
             row_position = self.tableWidget.rowCount()
@@ -61,11 +63,17 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window = Registration([self.update_user])
         self.create_window.show()
 
-    def open_lot_add(self):
-        self.create_window = LotAdd(self.current_user, [self.update_table])
+    def open_lot_buy(self):
+        if self.current_row is None:
+            dialog = Dialog("Выберите лот!")
+            dialog.exec_()
+            return
+        lot_id = int(self.tableWidget.item(self.current_row, 0).text())
+        lot = self.session.query(Lot).get(lot_id)
+        self.create_window = LotBuy(lot, self.current_user, [self.update_table])
         self.create_window.show()
 
-    def open_lot_buy(self):
+    def open_lot_add(self):
         ...
 
     def open_lot_update(self):

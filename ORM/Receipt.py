@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from sqlalchemy.orm import relationship
 
 from .database_meta import Base
@@ -9,8 +9,9 @@ class Receipt(Base):
 
     receipt_id = Column(Integer, primary_key=True, autoincrement=True)
     lot_id = Column(Integer, ForeignKey("Lot.lot_id"))
+    buyed_count = Column(Integer, primary_key=False, nullable=True)
     buyer_id = Column(Integer, ForeignKey("Buyer.buyer_id"))
-    purchase_date = Column(String(31), primary_key=False, nullable=True)
+    purchase_date = Column(Date, primary_key=False, nullable=True)
 
     lot = relationship("Lot", back_populates="receipts")
     buyer = relationship("Buyer", back_populates="receipts")

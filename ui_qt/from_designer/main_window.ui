@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>722</width>
-    <height>512</height>
+    <width>790</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>170</number>
+       <number>150</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
@@ -55,6 +55,11 @@
       <attribute name="verticalHeaderHighlightSections">
        <bool>true</bool>
       </attribute>
+      <column>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>Продавец</string>
@@ -116,7 +121,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>722</width>
+     <width>790</width>
      <height>26</height>
     </rect>
    </property>
