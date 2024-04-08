@@ -59,7 +59,7 @@ class LotBuy(QWidget, UiBuyLotForm):
             new_receipt = Receipt(lot_id=self.lot.lot_id,
                                   buyed_count=buyed_count,
                                   buyer_id=self.buyer.buyer_id,
-                                  purchase_date=date.today())
+                                  purchase_date=str(date.today()))
             self.session.add(new_receipt)
             self.session.commit()
             self.custom_close()
