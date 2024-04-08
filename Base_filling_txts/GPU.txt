@@ -1,0 +1,33 @@
+ASUS ROG Strix GeForce RTX 4080 Gaming $ 2500 $ 5120 $ 10 $ PCI-E 4.0
+MSI GeForce RTX 4070 Super Ventus $ 2400 $ 4608 $ 8 $ PCI-E 4.0
+Gigabyte GeForce RTX 4090 Aorus Xtreme $ 2600 $ 6144 $ 12 $ PCI-E 4.0
+EVGA GeForce RTX 4060 FTW3 Ultra $ 2300 $ 4352 $ 8 $ PCI-E 4.0
+Zotac GeForce RTX 4050 AMP Extreme $ 2200 $ 3840 $ 6 $ PCI-E 4.0
+PNY GeForce RTX 4060 XLR8 Gaming $ 2310 $ 4352 $ 8 $ PCI-E 4.0
+Sapphire Radeon RX 7080 Pulse $ 2450 $ 5120 $ 10 $ PCI-E 4.0
+XFX Radeon RX 7070 Speedster Merc $ 2350 $ 4608 $ 8 $ PCI-E 4.0
+PowerColor Radeon RX 7060 Red Devil $ 2150 $ 3840 $ 6 $ PCI-E 4.0
+HIS Radeon RX 7050 IceQ X2 $ 2100 $ 3584 $ 4 $ PCI-E 4.0
+Colorful iGame GeForce GTX 6090 Vulcan $ 2550 $ 5120 $ 10 $ PCI-E 4.0
+Inno3D GeForce GTX 6080 Twin X2 $ 2450 $ 4608 $ 8 $ PCI-E 4.0
+Gainward GeForce GTX 6070 Phoenix GS $ 2250 $ 4096 $ 6 $ PCI-E 4.0
+Palit GeForce GTX 6060 StormX OC $ 2150 $ 3840 $ 4 $ PCI-E 4.0
+ASUS TUF Gaming GeForce GTX 6050 Plus $ 2100 $ 3584 $ 4 $ PCI-E 4.0
+MSI GeForce GT 710 2GD3H LP $ 650 $ 192 $ 2 $ PCI-E 2.0
+Gigabyte GeForce GT 1030 Low Profile $ 750 $ 384 $ 2 $ PCI-E 3.0
+EVGA GeForce GTX 1650 Super SC Ultra $ 1600 $ 1280 $ 4 $ PCI-E 3.0
+Zotac GeForce GTX 1060 Mini $ 1200 $ 1152 $ 6 $ PCI-E 3.0
+PNY GeForce GT 730 XLR8 $ 400 $ 96 $ 1 $ PCI-E 2.0
+Sapphire Radeon RX 570 Nitro+ $ 900 $ 2048 $ 4 $ PCI-E 3.0
+XFX Radeon RX 580 GTS Black Edition $ 1000 $ 2304 $ 8 $ PCI-E 3.0
+PowerColor Radeon RX 590 Red Dragon $ 1100 $ 2304 $ 8 $ PCI-E 3.0
+HIS Radeon RX 550 IceQ $ 450 $ 512 $ 2 $ PCI-E 3.0
+Colorful iGame GeForce GTX 1050 Ti $ 800 $ 768 $ 4 $ PCI-E 3.0
+Inno3D GeForce GTX 1660 Super Compact $ 1500 $ 1408 $ 6 $ PCI-E 3.0
+Gainward GeForce GTX 1650 Pegasus $ 1300 $ 896 $ 4 $ PCI-E 3.0
+Palit GeForce GT 1030 KalmX $ 700 $ 384 $ 2 $ PCI-E 3.0
+ASUS TUF Gaming GeForce GTX 1660 Ti $ 1400 $ 1536 $ 6 $ PCI-E 3.0
+MSI GeForce RTX 3060 Gaming X Trio $ 1800 $ 3584 $ 12 $ PCI-E 4.0
+Gigabyte GeForce RTX 3050 Eagle OC $ 1200 $ 2560 $ 4 $ PCI-E 4.0
+EVGA GeForce RTX 3070 XC3 Ultra Gaming $ 2100 $ 5888 $ 8 $ PCI-E 4.0
+Zotac GeForce RTX 3080 Trinity $ 2400 $ 8704 $ 10 $ PCI-E 4.0

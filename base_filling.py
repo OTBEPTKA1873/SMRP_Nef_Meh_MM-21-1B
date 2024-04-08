@@ -20,26 +20,26 @@ GPU_MBs = session.query(GPU_MB).all()
 RAM_MBs = session.query(RAM_MB).all()
 Cooler_MBs = session.query(Cooler_MB).all()
 
-print('---------------------------')
-for i in CPUs:
-    print(i)
-print('---------------------------')
-new_CPU = CPU(CPU_name="itel", ALU=8, freq=3200, socket="LGA 1700", TDP=50)#seq позволяет через autoincrement назначить новое id
-session.add(new_CPU)
+# Открываем и считываем
+with open("Base_filling_txts/CPU.txt", "r") as f:
+    cpus = f.read()
+cpus = cpus.replace(" $ ", "\n")# Заменяем все символы $ на пробелы
+cpus = cpus.split("\n")# Разбиваем текст на список строк
+i = 0
+while i in range(len(cpus)):
+    new_CPU = CPU(CPU_name=cpus[i], ALU=cpus[i+1], freq=cpus[i+2], socket=cpus[i+3], TDP=cpus[i+4])
+    session.add(new_CPU)
+    i += 5
+session.commit()
+with open("Base_filling_txts/GPU.txt", "r") as f:
+    gpus = f.read()
+gpus = gpus.replace(" $ ", "\n")# Заменяем все символы $ на пробелы
+gpus = gpus.split("\n")# Разбиваем текст на список строк
+i = 0
+while i in range(len(gpus)):
+    new_GPU = GPU(GPU_name=gpus[i], freq=gpus[i+1], ALU=gpus[i+2], volume=gpus[i+3], GPU_type=gpus[i+4])
+    session.add(new_GPU)
+    i += 5
 session.commit()
 print('Create')
-CPUs = session.query(CPU).all()
-for i in CPUs:
-    print(i)
-print('---------------------------')
-#del_CPU = session.query(CPU).where(CPU.CPU_id == 4).one()
-del_CPU = session.query(CPU).order_by(CPU.CPU_id.desc()).limit(1).one()
-session.delete(del_CPU)
-session.commit()
-CPUs = session.query(CPU).all()
-print('Delete')
-for i in CPUs:
-    print(i)
-print('---------------------------')
-
 session.close()
