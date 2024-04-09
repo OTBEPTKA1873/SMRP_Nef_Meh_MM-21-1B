@@ -6,6 +6,8 @@ from .dialog import Dialog
 from .registration_form import Registration
 from .add_lot_form import LotAdd
 from .buy_lot_form import LotBuy
+from .update_lot_form import LotUpdate
+from .receipts_form import Receipts
 
 
 class MainWindow(QMainWindow, UiMainWindow):
@@ -64,6 +66,9 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window.show()
 
     def open_lot_buy(self):
+        if self.current_user is None:
+            self.open_register()
+            return
         if self.current_row is None:
             dialog = Dialog("Выберите лот!")
             dialog.exec_()
@@ -73,14 +78,22 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window = LotBuy(lot, self.current_user, [self.update_table])
         self.create_window.show()
 
+    def open_lot_update(self, row, column):
+        lot_id = int(self.tableWidget.item(row, 0).text())
+        lot = self.session.query(Lot).get(lot_id)
+        self.create_window = LotUpdate(lot, self.current_user, [self.update_table])
+        self.create_window.show()
+
     def open_lot_add(self):
         ...
 
-    def open_lot_update(self):
-        ...
-
     def open_receipts(self):
-        ...
+        if self.current_user is None:
+            self.open_register()
+            return
+        self.create_window = Receipts(self.current_user)
+        self.create_window.show()
+
 
     def open_sort(self):
         ...
