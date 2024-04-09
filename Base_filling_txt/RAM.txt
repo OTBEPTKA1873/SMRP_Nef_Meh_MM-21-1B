@@ -1,0 +1,45 @@
+Corsair Vengeance RGB Pro $ DDR4 $ 16 $ 3600
+G.Skill Ripjaws V $ DDR4 $ 32 $ 3000
+Crucial Ballistix Sport LT $ DDR4 $ 16 $ 3200
+ADATA XPG Spectrix D60G $ DDR4 $ 8 $ 3600
+Team T-Force Delta RGB $ DDR4 $ 16 $ 3200
+Patriot Viper Steel $ DDR4 $ 32 $ 3000
+HyperX Predator $ DDR4 $ 64 $ 3200
+Ballistix Elite $ DDR4 $ 32 $ 3200
+G.Skill Trident Z RGB $ DDR4 $ 16 $ 3600
+Corsair Dominator Platinum RGB $ DDR4 $ 32 $ 3200
+Crucial Ballistix Elite $ DDR4 $ 16 $ 3600
+Team T-Force Vulcan Z $ DDR4 $ 8 $ 3000
+ADATA XPG Gammix D10 $ DDR4 $ 16 $ 3200
+Patriot Viper 4 Blackout $ DDR4 $ 32 $ 3000
+Kingston HyperX Fury $ DDR4 $ 8 $ 3200
+Corsair Vengeance LPX $ DDR4 $ 16 $ 3000
+G.Skill Ripjaws X $ DDR4 $ 32 $ 3200
+Crucial Ballistix Tactical Tracer RGB $ DDR4 $ 16 $ 3600
+ADATA XPG Z1 $ DDR4 $ 8 $ 3000
+Team T-Force Night Hawk RGB $ DDR4 $ 32 $ 3200
+Patriot Viper Elite $ DDR4 $ 16 $ 3000
+HyperX FURY $ DDR4 $ 8 $ 3200
+Ballistix Sport LT $ DDR4 $ 32 $ 3000
+G.Skill Sniper X $ DDR4 $ 8 $ 3200
+Corsair Vengeance LPX $ DDR4 $ 16 $ 3200
+Crucial Ballistix Sport $ DDR4 $ 32 $ 3000
+ADATA Premier $ DDR4 $ 8 $ 2666
+Team T-Force Dark Z $ DDR4 $ 16 $ 3200
+Patriot Signature Line $ DDR4 $ 32 $ 2666
+Kingston HyperX Impact $ DDR4 $ 8 $ 3200
+Corsair Dominator Platinum $ DDR4 $ 16 $ 3600
+G.Skill Aegis $ DDR4 $ 32 $ 3000
+Crucial Ballistix MAX RGB $ DDR4 $ 8 $ 3600
+ADATA Premier $ DDR3 $ 16 $ 1600
+Team T-Force Zeus $ DDR4 $ 32 $ 3200
+Patriot Viper Steel Series $ DDR4 $ 16 $ 3000
+HyperX FURY $ DDR3 $ 8 $ 1600
+Ballistix Sport AT $ DDR4 $ 32 $ 3000
+G.Skill Ripjaws V Series $ DDR4 $ 8 $ 3200
+Corsair Vengeance RGB PRO $ DDR4 $ 16 $ 3600
+Crucial Ballistix Elite RGB $ DDR4 $ 32 $ 3200
+ADATA XPG Spectrix D41 $ DDR4 $ 8 $ 3000
+Team T-Force Vulcan $ DDR4 $ 16 $ 3200
+Patriot Viper RGB $ DDR4 $ 32 $ 3000
+Kingston ValueRAM $ DDR4 $ 8 $ 2666

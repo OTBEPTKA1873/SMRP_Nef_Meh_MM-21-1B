@@ -53,6 +53,16 @@ if del_or_cre == 1:
         new_MB = MB(MB_name=mbs[i], form_factor=mbs[i + 1], socket_type=mbs[i + 2], RAM_type=mbs[i + 3], RAM_count=mbs[i + 4], freq=mbs[i + 5], GPU_type=mbs[i + 6])
         session.add(new_MB)
         i += 7
+    # Работа с RAM
+    with open("Base_filling_txt/RAM.txt", "r") as f:  # Открываем и считываем RAM
+        rams = f.read()
+    rams = rams.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    rams = rams.split("\n")  # Разбиваем текст на список строк
+    i = 0
+    while i in range(len(rams)):
+        new_RAM = RAM(RAM_name=rams[i], RAM_type=rams[i + 1], volume=rams[i + 2], freq=rams[i + 3])
+        session.add(new_RAM)
+        i += 4
     print('Create')
 else:
     for cpus in CPUs:
@@ -61,6 +71,8 @@ else:
         session.delete(gpus)
     for mbs in MBs:
         session.delete(mbs)
+    for rams in RAMs:
+        session.delete(rams)
     print('Delete')
 session.commit()
 session.close()
