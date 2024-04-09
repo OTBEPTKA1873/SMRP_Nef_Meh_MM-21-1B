@@ -24,55 +24,70 @@ Cooler_MBs = session.query(Cooler_MB).all()
 del_or_cre = 1
 if del_or_cre == 1:
     # Работа с CPU
-    with open("Base_filling_txt/CPU.txt", "r") as f:# Читаем CPU
-        cpus = f.read()
-    cpus = cpus.replace(" $ ", "\n")# Заменяем все символы $ на пробелы
-    cpus = cpus.split("\n")# Разбиваем текст на список строк
+    with open("Base_filling_txt/CPU.txt", "r") as f:  # Читаем CPU
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
     i = 0
-    while i in range(len(cpus)):
-        new_CPU = CPU(CPU_name=cpus[i], ALU=cpus[i+1], freq=cpus[i+2], socket=cpus[i+3], TDP=cpus[i+4])
+    while i in range(len(new)):
+        new_CPU = CPU(CPU_name=new[i], ALU=new[i + 1], freq=new[i + 2], socket=new[i + 3], TDP=new[i + 4])
         session.add(new_CPU)
         i += 5
+    del new[:]
     # Работа с GPU
-    with open("Base_filling_txt/GPU.txt", "r") as f:# Открываем и считываем GPU
-        gpus = f.read()
-    gpus = gpus.replace(" $ ", "\n")# Заменяем все символы $ на пробелы
-    gpus = gpus.split("\n")# Разбиваем текст на список строк
+    with open("Base_filling_txt/GPU.txt", "r") as f:  # Открываем и считываем GPU
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
     i = 0
-    while i in range(len(gpus)):
-        new_GPU = GPU(GPU_name=gpus[i], freq=gpus[i+1], ALU=gpus[i+2], volume=gpus[i+3], GPU_type=gpus[i+4])
+    while i in range(len(new)):
+        new_GPU = GPU(GPU_name=new[i], freq=new[i + 1], ALU=new[i + 2], volume=new[i + 3], GPU_type=new[i + 4])
         session.add(new_GPU)
         i += 5
+    del new[:]
     # Работа с MB
     with open("Base_filling_txt/MB.txt", "r") as f:  # Открываем и считываем MB
-        mbs = f.read()
-    mbs = mbs.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
-    mbs = mbs.split("\n")  # Разбиваем текст на список строк
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
     i = 0
-    while i in range(len(mbs)):
-        new_MB = MB(MB_name=mbs[i], form_factor=mbs[i + 1], socket_type=mbs[i + 2], RAM_type=mbs[i + 3], RAM_count=mbs[i + 4], freq=mbs[i + 5], GPU_type=mbs[i + 6])
+    while i in range(len(new)):
+        new_MB = MB(MB_name=new[i], form_factor=new[i + 1], socket_type=new[i + 2], RAM_type=new[i + 3], RAM_count=new[i + 4], freq=new[i + 5], GPU_type=new[i + 6])
         session.add(new_MB)
         i += 7
+    del new[:]
     # Работа с RAM
     with open("Base_filling_txt/RAM.txt", "r") as f:  # Открываем и считываем RAM
-        rams = f.read()
-    rams = rams.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
-    rams = rams.split("\n")  # Разбиваем текст на список строк
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
     i = 0
-    while i in range(len(rams)):
-        new_RAM = RAM(RAM_name=rams[i], RAM_type=rams[i + 1], volume=rams[i + 2], freq=rams[i + 3])
+    while i in range(len(new)):
+        new_RAM = RAM(RAM_name=new[i], RAM_type=new[i + 1], volume=new[i + 2], freq=new[i + 3])
         session.add(new_RAM)
         i += 4
+    del new[:]
     # Работа с PU
     with open("Base_filling_txt/PU.txt", "r") as f:  # Открываем и считываем PU
-        pus = f.read()
-    pus = pus.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
-    pus = pus.split("\n")  # Разбиваем текст на список строк
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
     i = 0
-    while i in range(len(pus)):
-        new_pus = PU(PU_name=pus[i], watt=pus[i + 1])
+    while i in range(len(new)):
+        new_pus = PU(PU_name=new[i], watt=new[i + 1])
         session.add(new_pus)
         i += 2
+    del new[:]
+    # Работа с Cooler
+    with open("Base_filling_txt/Cooler.txt", "r") as f:  # Открываем и считываем Cooler
+        new = f.read()
+    new = new.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    new = new.split("\n")  # Разбиваем текст на список строк
+    i = 0
+    while i in range(len(new)):
+        new_pus = Cooler(cooler_name=new[i], socket=new[i + 1], DH=new[i + 2], noise=new[i + 3])
+        session.add(new_pus)
+        i += 4
     print('Create')
 else:
     for cpus in CPUs:
@@ -85,6 +100,8 @@ else:
         session.delete(rams)
     for pus in PUs:
         session.delete(pus)
+    for coolers in Coolers:
+        session.delete(coolers)
     print('Delete')
 session.commit()
 session.close()
