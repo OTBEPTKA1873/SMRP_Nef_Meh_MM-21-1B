@@ -63,6 +63,16 @@ if del_or_cre == 1:
         new_RAM = RAM(RAM_name=rams[i], RAM_type=rams[i + 1], volume=rams[i + 2], freq=rams[i + 3])
         session.add(new_RAM)
         i += 4
+    # Работа с PU
+    with open("Base_filling_txt/PU.txt", "r") as f:  # Открываем и считываем PU
+        pus = f.read()
+    pus = pus.replace(" $ ", "\n")  # Заменяем все символы $ на пробелы
+    pus = pus.split("\n")  # Разбиваем текст на список строк
+    i = 0
+    while i in range(len(pus)):
+        new_pus = PU(PU_name=pus[i], watt=pus[i + 1])
+        session.add(new_pus)
+        i += 2
     print('Create')
 else:
     for cpus in CPUs:
@@ -73,6 +83,8 @@ else:
         session.delete(mbs)
     for rams in RAMs:
         session.delete(rams)
+    for pus in PUs:
+        session.delete(pus)
     print('Delete')
 session.commit()
 session.close()
