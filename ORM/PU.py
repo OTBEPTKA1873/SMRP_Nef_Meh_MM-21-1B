@@ -13,6 +13,9 @@ class PU(Base):
 
     lots = relationship("Lot", back_populates="PU")
 
+    def TC(self):
+        return f"Мощность: {str(self.watt)}"
+
     def __str__(self):
         return f"Power Unit {self.PU_id} {self.PU_name} {self.watt}"
 

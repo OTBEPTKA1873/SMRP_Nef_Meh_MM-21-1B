@@ -18,6 +18,9 @@ class GPU(Base):
 
     GPU_MBs = relationship("GPU_MB", back_populates="GPU")
 
+    def TC(self):
+        return f"ALU: {str(self.ALU)}\nЧастота: {str(self.freq)}\nОбъём: {str(self.volume)}\nТип: {self.GPU_type}"
+
     def __str__(self):
         return f"GPU {self.GPU_id} {self.GPU_name} {self.freq} {self.ALU} {self.volume} {self.GPU_type}"
 

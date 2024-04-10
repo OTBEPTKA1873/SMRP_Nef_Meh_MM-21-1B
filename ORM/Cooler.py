@@ -17,6 +17,9 @@ class Cooler(Base):
 
     cooler_MBs = relationship("Cooler_MB", back_populates="cooler")
 
+    def TC(self):
+        return f"Сокет: {self.socket}\nDH: {str(self.DH)}\nУровень шума: {str(self.noise)}"
+
     def __str__(self):
         return f"Cooler {self.CL_id} {self.CL_name} {self.socket} {self.DH} {self.noise}"
 

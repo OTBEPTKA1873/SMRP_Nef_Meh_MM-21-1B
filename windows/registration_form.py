@@ -36,15 +36,15 @@ class Registration(QWidget, UiRegistrationForm):
                                 last_name=FIO[0],
                                 first_name=FIO[1],
                                 patronymic=FIO[2] if len(FIO) >= 3 else None)
+                self.session.add(new_user)
+                self.session.commit()
                 new_seller = Seller()
+                new_seller.user_id = new_user.user_id
                 self.session.add(new_seller)
                 self.session.commit()
                 new_buyer = Buyer()
+                new_buyer.user_id = new_user.user_id
                 self.session.add(new_buyer)
-                self.session.commit()
-                new_user.seller_id = new_seller.seller_id
-                new_user.buyer_id = new_buyer.buyer_id
-                self.session.add(new_user)
                 self.session.commit()
                 self.custom_close(new_user)
             else:

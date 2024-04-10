@@ -16,7 +16,7 @@ class MainWindow(QMainWindow, UiMainWindow):
 
         self.setupUi(self)
         self.create_window = None
-        self.session = get_session()
+        self.session = None
         self.current_row = None
         self.current_user = None
 
@@ -32,28 +32,18 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.update_table()
 
     def update_table(self):
+        self.session = get_session()
         lots = self.session.query(Lot).where(Lot.count > 0).order_by(Lot.lot_id).all()
         self.tableWidget.setRowCount(0)
         for lot in lots:
             row_position = self.tableWidget.rowCount()
             self.tableWidget.insertRow(row_position)
-            self.tableWidget.setItem(row_position, 0, QTableWidgetItem(f"{lot.seller.user.last_name} {lot.seller.user.first_name} {lot.seller.user.patronymic if lot.seller.user.patronymic else ''}"))
-            if lot.CPU is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.CPU.CPU_name))
-            elif lot.GPU is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.GPU.GPU_name))
-            elif lot.MB is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.MB.MB_name))
-            elif lot.RAM is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.RAM.RAM_name))
-            elif lot.PU is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.PU.PU_name))
-            elif lot.memory is not None:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.memory.mem_name))
-            else:
-                self.tableWidget.setItem(row_position, 1, QTableWidgetItem(lot.cooler.cooler_name))
-            self.tableWidget.setItem(row_position, 2, QTableWidgetItem(str(lot.price)))
-            self.tableWidget.setItem(row_position, 3, QTableWidgetItem(str(lot.count)))
+            self.tableWidget.setItem(row_position, 0, QTableWidgetItem(str(lot.lot_id)))
+            self.tableWidget.setItem(row_position, 1, QTableWidgetItem(f"{lot.seller.user.last_name} {lot.seller.user.first_name} {lot.seller.user.patronymic if lot.seller.user.patronymic else ''}"))
+            self.tableWidget.setItem(row_position, 2, QTableWidgetItem(lot.component_name()))
+            self.tableWidget.setItem(row_position, 3, QTableWidgetItem(str(lot.price)))
+            self.tableWidget.setItem(row_position, 4, QTableWidgetItem(str(lot.count)))
+        self.session.close()
 
     def table_widget_cell_clicked(self, row, column):
         self.current_row = row
@@ -68,6 +58,7 @@ class MainWindow(QMainWindow, UiMainWindow):
     def open_lot_buy(self):
         if self.current_user is None:
             self.open_register()
+            self.current_row = None
             return
         if self.current_row is None:
             dialog = Dialog("Выберите лот!")
@@ -75,6 +66,12 @@ class MainWindow(QMainWindow, UiMainWindow):
             return
         lot_id = int(self.tableWidget.item(self.current_row, 0).text())
         lot = self.session.query(Lot).get(lot_id)
+        if self.current_user.user_id == lot.seller.user.user_id:
+            dialog = Dialog("Это Ваш лот!")
+            dialog.exec_()
+            self.current_row = None
+            return
+        self.current_row = None
         self.create_window = LotBuy(lot, self.current_user, [self.update_table])
         self.create_window.show()
 

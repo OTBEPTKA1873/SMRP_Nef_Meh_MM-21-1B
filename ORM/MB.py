@@ -23,6 +23,9 @@ class MB(Base):
     MB_RAMs = relationship("RAM_MB", back_populates="MB")
     MB_coolers = relationship("Cooler_MB", back_populates="MB")
 
+    def TC(self):
+        return f"Форм-фактор: {self.form_factor}\nСокет: {self.socket_type}\nТип памяти: {self.RAM_type}\nКол-во слотов памяти: {str(self.RAM_count)}\nЧастота: {str(self.freq)}\nСлот: {self.GPU_type}"
+
     def __str__(self):
         return f"MB {self.MB_id} {self.MB_name} {self.form_factor} {self.socket_type} {self.RAM_type} {self.RAM_count} {self.freq} {self.GPU_type}"
 

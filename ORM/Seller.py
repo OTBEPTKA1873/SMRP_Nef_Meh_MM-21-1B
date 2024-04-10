@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from .database_meta import Base
@@ -8,6 +8,7 @@ class Seller(Base):
     __tablename__ = "Seller"
 
     seller_id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("User.user_id"))
 
     lots = relationship("Lot", back_populates="seller")
 

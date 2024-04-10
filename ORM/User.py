@@ -15,9 +15,6 @@ class User(Base):
     last_name = Column(String(31), primary_key=False, nullable=False)
     patronymic = Column(String(31), primary_key=False, nullable=True)
 
-    seller_id = Column(Integer, ForeignKey("Seller.seller_id"))
-    buyer_id = Column(Integer, ForeignKey("Buyer.buyer_id"))
-
     seller = relationship("Seller", back_populates="user")
     buyer = relationship("Buyer", back_populates="user")
 

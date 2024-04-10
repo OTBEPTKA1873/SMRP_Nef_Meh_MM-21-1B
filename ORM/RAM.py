@@ -17,6 +17,9 @@ class RAM(Base):
 
     RAM_MBs = relationship("RAM_MB", back_populates="RAM")
 
+    def TC(self):
+        return f"Тип: {self.RAM_type}\nОбъём: {str(self.volume)}\nЧастота: {str(self.freq)}"
+
     def __str__(self):
         return f"RAM {self.RAM_id} {self.RAM_name} {self.RAM_type} {self.volume} {self.freq}"
 

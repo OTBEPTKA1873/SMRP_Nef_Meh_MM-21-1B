@@ -15,6 +15,9 @@ class Memory(Base):
 
     lots = relationship("Lot", back_populates="memory")
 
+    def TC(self):
+        return f"Тип: {str(self.mem_type)}\nОбъём: {str(self.volume)}\nСкорость: {str(self.speed)}"
+
     def __str__(self):
         return f"Memory {self.mem_id} {self.mem_name} {self.mem_type} {self.volume} {self.speed}"
 

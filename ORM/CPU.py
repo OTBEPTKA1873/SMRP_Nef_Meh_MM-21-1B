@@ -18,6 +18,9 @@ class CPU(Base):
 
     CPU_MBs = relationship("CPU_MB", back_populates="CPU")
 
+    def TC(self):
+        return f"ALU: {str(self.ALU)}\nЧастота: {str(self.freq)}\nСокет: {self.socket}\nTDP: {str(self.TDP)}"
+
     def __str__(self):
         return f"CPU {self.CPU_id} {self.CPU_name} {self.ALU} {self.freq} {self.socket} {self.TDP}"
 

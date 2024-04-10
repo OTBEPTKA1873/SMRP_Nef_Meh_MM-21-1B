@@ -2,3 +2,4 @@
 alembic.ini
 migrations
 config.py
+test.py
