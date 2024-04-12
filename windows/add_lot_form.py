@@ -32,6 +32,41 @@ class LotAdd(QWidget, UiAddLotForm):
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))  # Заполняем строки
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+        elif index == 3:
+            gpu = self.session.query(GPU).all()
+            for i in gpu:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)  # Создание строчки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.GPU_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+        elif index == 4:
+            cooler = self.session.query(Cooler).all()
+            for i in cooler:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)  # Создание строчки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.cooler_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+        elif index == 5:
+            ram = self.session.query(RAM).all()
+            for i in ram:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)  # Создание строчки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.RAM_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+        elif index == 6:
+            mem = self.session.query(Memory).all()
+            for i in mem:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)  # Создание строчки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.mem_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+        elif index == 7:
+            pu = self.session.query(PU).all()
+            for i in pu:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)  # Создание строчки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.PU_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
         self.tableWidget.cellDoubleClicked.connect(self.create_lot)
 
     def create_lot(self):
