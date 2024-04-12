@@ -23,20 +23,11 @@ class LotAdd(QWidget, UiAddLotForm):
         self.session = get_session()
         self.push_button_create.clicked.connect(self.create_lot)  # Создание окна
         self.push_button_close.clicked.connect(lambda: self.close()) #Закрытие окна
-        self.comboBox.removeItem(7)
 
-        self.comboBox.activated.connect(self.activated)
-        self.comboBox.currentTextChanged.connect(self.text_changed)
-        self.comboBox.currentIndexChanged.connect(self.index_changed)
+        self.comboBox.activated.connect(self.activated) # Вызов функции activated
 
     def activated(Self, index):
         print("Activated index:", index)
-
-    def text_changed(self, s):
-        print("Text changed:", s)
-
-    def index_changed(self, index):
-        print("Index changed", index)
 
     def check_index(self, index):
         CurIndex = self.combobox.currentIndex()
