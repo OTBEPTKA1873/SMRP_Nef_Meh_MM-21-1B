@@ -24,49 +24,49 @@ class LotAdd(QWidget, UiAddLotForm):
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.CPU_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.ALU} Ядер,  {i.freq} Гц,  {i.socket}, Тепловыделение: {i.TDP} Вт"))
         elif index == 2:
             mb = self.session.query(MB).all()
             for i in mb:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.form_factor},  {i.socket_type},  {i.RAM_type}x{i.RAM_count},  {i.freq} Гц,  {i.GPU_type}"))
         elif index == 3:
             gpu = self.session.query(GPU).all()
             for i in gpu:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.GPU_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.freq} Гц,  {i.ALU} Ядер,  {i.volume} Гб,  {i.GPU_type}"))
         elif index == 4:
             cooler = self.session.query(Cooler).all()
             for i in cooler:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.cooler_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.socket},  {i.DH} Вт,  {i.noise} Дб"))
         elif index == 5:
             ram = self.session.query(RAM).all()
             for i in ram:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.RAM_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.RAM_type},  {i.volume} Гб,  {i.freq} Гц"))
         elif index == 6:
             mem = self.session.query(Memory).all()
             for i in mem:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.mem_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.mem_type},  {i.volume} Гб, скорость: {i.speed} Мб/с"))
         elif index == 7:
             pu = self.session.query(PU).all()
             for i in pu:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.PU_name))  # Заполняем строки
-                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem("Hello"))
+                self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.watt} Вт"))
         self.tableWidget.cellDoubleClicked.connect(self.create_lot)
 
     def create_lot(self):
