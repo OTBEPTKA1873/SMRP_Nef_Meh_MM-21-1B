@@ -82,7 +82,11 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window.show()
 
     def open_lot_add(self):
-        ...
+        if self.current_user is None:
+            self.open_register()
+            return
+        self.create_window = LotAdd(self.current_user)
+        self.create_window.show()
 
     def open_receipts(self):
         if self.current_user is None:
