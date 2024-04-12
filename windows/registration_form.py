@@ -25,7 +25,7 @@ class Registration(QWidget, UiRegistrationForm):
             return
         # users = self.session.query(User).all()
         # if login in [user.user_login for user in users] and password in [user.user_password for user in users]:
-        user = self.session.query(User).where(User.user_login == login and User.user_password == password).first()
+        user = self.session.query(User).where(User.user_login == login, User.user_password == password).first()
         if user is not None:
             self.custom_close(user)
         else:
