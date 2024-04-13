@@ -41,3 +41,4 @@ AMD Ryzen 3 1300X $ 4 $ 3500 $ AM4 $ 65
 Intel Core i7 7820X $ 8 $ 4400 $ LGA 2066 $ 140
 AMD Ryzen 9 3900 $ 12 $ 4200 $ AM4 $ 105
 Intel Core i5 7600K $ 4 $ 3800 $ LGA 1151 $ 91
+HELP FROM BROTHER $ 44 $ 4508 $ remy 4508 $ 465
