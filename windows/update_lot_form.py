@@ -31,10 +31,9 @@ class LotUpdate(QWidget, UiUpdateLotForm):
         self.spinBox.setValue(self.lot.count)
 
     def update(self):
-        new_price = float(self.line_edit_price.text())
         new_count = self.spinBox.value()
         if self.seller is None:
-            dialog = Dialog("Нет прав доступа на удаление лота!")
+            dialog = Dialog("Нет прав доступа на изменение лота!")
             ret_value = dialog.exec_()
             self.line_edit_price.setText(str(self.lot.price))
             self.spinBox.setValue(self.lot.count)
@@ -45,6 +44,13 @@ class LotUpdate(QWidget, UiUpdateLotForm):
             self.line_edit_price.setText(str(self.lot.price))
             self.spinBox.setValue(self.lot.count)
             return
+        if not self.line_edit_price.text().isdigit():
+            dialog = Dialog("Введены непозволительные данные!")
+            ret_value = dialog.exec_()
+            self.line_edit_price.setText(str(self.lot.price))
+            self.spinBox.setValue(self.lot.count)
+            return
+        new_price = float(self.line_edit_price.text())
         if new_price < 0:
             dialog = Dialog("Введены непозволительные данные!")
             ret_value = dialog.exec_()
