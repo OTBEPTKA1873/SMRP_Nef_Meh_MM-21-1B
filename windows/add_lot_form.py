@@ -2,17 +2,17 @@ from typing import Iterable, Callable
 
 from PyQt5.QtWidgets import QWidget, QDialog, QTableWidget, QTableWidgetItem
 
-from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory, PU
+from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory, PU, Seller
 from ui_qt import UiAddLotForm
 #from .dialog import Dialog
 class LotAdd(QWidget, UiAddLotForm):
 
-    def __init__(self, callbacks: Iterable[Callable]):
+    def __init__(self, current_user: User, callbacks: Iterable[Callable]):
         super().__init__()
         self.callbacks = callbacks
         self.setupUi(self)
         self.session = get_session()
-        self.push_button_create.clicked.connect(self.create_lot)  # Создание окна
+        self.seller = self.session.query(Seller).where(Seller.user_id == current_user.user_id).one()
         self.push_button_close.clicked.connect(lambda: self.close()) #Закрытие окна
         self.comboBox.activated.connect(self.activated) # Вызов функции activated
 
@@ -23,58 +23,145 @@ class LotAdd(QWidget, UiAddLotForm):
             for i in cpu:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.CPU_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.CPU_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.ALU} Ядер,  {i.freq} Гц,  {i.socket}, Тепловыделение: {i.TDP} Вт"))
         elif index == 2:
             mb = self.session.query(MB).all()
             for i in mb:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.form_factor},  {i.socket_type},  {i.RAM_type}x{i.RAM_count},  {i.freq} Гц,  {i.GPU_type}"))
         elif index == 3:
             gpu = self.session.query(GPU).all()
             for i in gpu:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.GPU_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.GPU_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.freq} Гц,  {i.ALU} Ядер,  {i.volume} Гб,  {i.GPU_type}"))
         elif index == 4:
             cooler = self.session.query(Cooler).all()
             for i in cooler:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.cooler_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.cooler_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.socket},  {i.DH} Вт,  {i.noise} Дб"))
         elif index == 5:
             ram = self.session.query(RAM).all()
             for i in ram:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.RAM_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.RAM_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.RAM_type},  {i.volume} Гб,  {i.freq} Гц"))
         elif index == 6:
             mem = self.session.query(Memory).all()
             for i in mem:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.mem_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.mem_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.mem_type},  {i.volume} Гб, скорость: {i.speed} Мб/с"))
         elif index == 7:
             pu = self.session.query(PU).all()
             for i in pu:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)  # Создание строчки
-                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.PU_name))  # Заполняем строки
+                self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.PU_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.watt} Вт"))
-        self.tableWidget.cellDoubleClicked.connect(self.create_lot)
+        self.push_button_create.clicked.connect(self.create_lot)
 
     def create_lot(self):
-
-
-        self.session.add()
-        self.session.commit()
-
+        component = self.comboBox.currentIndex() # Что выводим CPU, GPU или что-то другое
+        if component == 1: # Создание лота CPU
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                          price=self.line_edit_price.text(),
+                          GPU_id=None,
+                          CPU_id=self.tableWidget.currentRow() + 1,#У нас id копонентов должны начинатся с 1
+                          MB_id=None,
+                          RAM_id=None,
+                          PU_id=None,
+                          mem_id=None,
+                          cooler_id=None,
+                          count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 2: # Создание лота MB
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=None,
+                         CPU_id=None,
+                         MB_id=self.tableWidget.currentRow() + 1,
+                         RAM_id=None,
+                         PU_id=None,
+                         mem_id=None,
+                         cooler_id=None,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 3: # Создание лота GPU
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=self.tableWidget.currentRow() + 1,
+                         CPU_id=None,
+                         MB_id=None,
+                         RAM_id=None,
+                         PU_id=None,
+                         mem_id=None,
+                         cooler_id=None,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 4: # Создание лота GPU
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=None,
+                         CPU_id=None,
+                         MB_id=None,
+                         RAM_id=None,
+                         PU_id=None,
+                         mem_id=None,
+                         cooler_id=self.tableWidget.currentRow() + 1,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 5: # Создание лота RAM
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=None,
+                         CPU_id=None,
+                         MB_id=None,
+                         RAM_id=self.tableWidget.currentRow() + 1,
+                         PU_id=None,
+                         mem_id=None,
+                         cooler_id=None,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 6: # Создание лота RAM
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=None,
+                         CPU_id=None,
+                         MB_id=None,
+                         RAM_id=None,
+                         PU_id=None,
+                         mem_id=self.tableWidget.currentRow() + 1,
+                         cooler_id=None,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
+        elif component == 7: # Создание лота PU
+            new_lot = Lot(seller_id=self.seller.seller_id,
+                         price=self.line_edit_price.text(),
+                         GPU_id=None,
+                         CPU_id=None,
+                         MB_id=None,
+                         RAM_id=None,
+                         PU_id=self.tableWidget.currentRow() + 1,
+                         mem_id=None,
+                         cooler_id=None,
+                         count=self.line_edit_count.text())
+            self.session.add(new_lot)
+            self.session.commit()
         self.custom_close()
 
 
@@ -82,15 +169,3 @@ class LotAdd(QWidget, UiAddLotForm):
         for callback in self.callbacks:
             callback()
         self.close()
-
-
-
-
-
-    # self.comboBox.setItemText(0, _translate("Form", "Процессоры"))
-    # self.comboBox.setItemText(1, _translate("Form", "Мат. платы"))
-    # self.comboBox.setItemText(2, _translate("Form", "Видеокарты"))
-    # self.comboBox.setItemText(3, _translate("Form", "Охлаждение"))
-    # self.comboBox.setItemText(4, _translate("Form", "Оперативная память"))
-    # self.comboBox.setItemText(5, _translate("Form", "Накопители"))
-    # self.comboBox.setItemText(6, _translate("Form", "Блоки питания"))
