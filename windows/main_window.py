@@ -95,9 +95,9 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window = Receipts(self.current_user)
         self.create_window.show()
 
-
     def open_sort(self):
-        ...
+        dialog = Dialog("А Вы думали, что здесь что-нибудь будет?")
+        dialog.exec_()
 
     """def open_actor_update(self, row, column):
         actor_id = int(self.tableWidget.item(row, 0).text())

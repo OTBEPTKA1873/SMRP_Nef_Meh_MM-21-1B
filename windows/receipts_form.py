@@ -7,14 +7,20 @@ from ui_qt import UiReceiptsForm
 class Receipts(QWidget, UiReceiptsForm):
     def __init__(self, user: User):
         super().__init__()
-        self.user = user
         self.setupUi(self)
         self.session = get_session()
+        self.buyer = self.session.query(Buyer).where(Buyer.user_id == user.user_id).one()
+        self.seller = self.session.query(Seller).where(Seller.user_id == user.user_id).one()
 
         self.pushButton.clicked.connect(lambda: self.close())
 
-        """
-        receipts = self.session.query(Receipt).where(Receipt.lot.seller.user.user_id == self.user.user_id or Receipt.buyer_id == buyer.buyer_id).order_by(Receipt.purchase_date).all()
+        receipts = self.session.query(Receipt).where(Receipt.buyer_id == self.buyer.buyer_id).order_by(Receipt.purchase_date).all()
+        lots = self.session.query(Lot).where(Lot.seller_id == self.seller.seller_id).all()
+        for lot in lots:
+            new_receipts = self.session.query(Receipt).where(Receipt.lot == lot).all()
+            receipts += new_receipts
+        receipts.sort(key=lambda x: x.purchase_date)
+
         self.tableWidget.setRowCount(0)
         for receipt in receipts:
             row_position = self.tableWidget.rowCount()
@@ -26,5 +32,5 @@ class Receipts(QWidget, UiReceiptsForm):
                 f"{receipt.lot.seller.user.last_name} {receipt.lot.seller.user.first_name} {receipt.lot.seller.user.patronymic if receipt.lot.seller.user.patronymic else ''}"))
             self.tableWidget.setItem(row_position, 3, QTableWidgetItem(receipt.lot.component_name()))
             self.tableWidget.setItem(row_position, 4, QTableWidgetItem(str(receipt.lot.price)))
-        """
+
         self.session.close()

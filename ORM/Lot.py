@@ -65,7 +65,7 @@ class Lot(Base):
         return TC
 
     def __str__(self):
-        return f"Lot {self.Lot_id} {self.seller_id} {self.price} {self.GPU_id} {self.CPU_id} {self.MB_id} {self.RAM_id} {self.PowerUnit_id} {self.Mem_id} {self.Cooler_id}"
+        return f"Lot {self.lot_id} {self.seller_id} {self.price}"
 
     def __repr__(self):
         return str(self)
