@@ -13,6 +13,7 @@ class Receipts(QWidget, UiReceiptsForm):
         self.seller = self.session.query(Seller).where(Seller.user_id == user.user_id).one()
 
         self.pushButton.clicked.connect(lambda: self.close())
+        self.tableWidget.horizontalHeader().setSectionResizeMode(3)
 
         receipts = self.session.query(Receipt).where(Receipt.buyer_id == self.buyer.buyer_id).order_by(Receipt.purchase_date).all()
         lots = self.session.query(Lot).where(Lot.seller_id == self.seller.seller_id).all()

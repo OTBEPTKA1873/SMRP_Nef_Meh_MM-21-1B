@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QDialog
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
 from ORM import get_session, Lot, User
 from ui_qt import UiMainWindow
@@ -27,6 +27,7 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.push_button_receipts.clicked.connect(self.open_receipts)
         self.push_button_sort.clicked.connect(self.open_sort)
         self.tableWidget.cellClicked.connect(self.table_widget_cell_clicked)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(3)
 
         self.open_register()
         self.update_table()
@@ -98,21 +99,3 @@ class MainWindow(QMainWindow, UiMainWindow):
     def open_sort(self):
         dialog = Dialog("А Вы думали, что здесь что-нибудь будет?")
         dialog.exec_()
-
-    """def open_actor_update(self, row, column):
-        actor_id = int(self.tableWidget.item(row, 0).text())
-        actor = self.session.query(Actor).get(actor_id)
-        self.create_window = ActorUpdate(actor, [self.updateTable])
-        self.create_window.show()
-
-    def open_dialog_delete_actor(self):
-        if self.current_row is None:
-            return
-        dialog_delete = Dialog("Точно хотите удалить??")
-        ret_value = dialog_delete.exec_()
-        if ret_value == QDialog.Accepted:
-            actor_id = int(self.tableWidget.item(self.current_row, 0).text())
-            actor = self.session.query(Actor).get(actor_id)
-            self.session.delete(actor)
-            self.session.commit()
-            self.update_table()"""
