@@ -32,6 +32,6 @@ class Receipts(QWidget, UiReceiptsForm):
             self.tableWidget.setItem(row_position, 2, QTableWidgetItem(
                 f"{receipt.lot.seller.user.last_name} {receipt.lot.seller.user.first_name} {receipt.lot.seller.user.patronymic if receipt.lot.seller.user.patronymic else ''}"))
             self.tableWidget.setItem(row_position, 3, QTableWidgetItem(receipt.lot.component_name()))
-            self.tableWidget.setItem(row_position, 4, QTableWidgetItem(str(receipt.lot.price)))
+            self.tableWidget.setItem(row_position, 4, QTableWidgetItem(str(receipt.lot.price * receipt.buyed_count)))
 
         self.session.close()
