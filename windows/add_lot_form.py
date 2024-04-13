@@ -4,21 +4,20 @@ from PyQt5.QtWidgets import QWidget, QDialog, QTableWidget, QTableWidgetItem
 
 from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory, PU, Seller
 from ui_qt import UiAddLotForm
+from .dialog import Dialog
 
-
+#from .dialog import Dialog
 class LotAdd(QWidget, UiAddLotForm):
 
     def __init__(self, current_user: User, callbacks: Iterable[Callable]):
+        self.component_id_dict = {} # Создаем словарь для id
         super().__init__()
-
-        self.component_id_dict = {}  # Создаем словарь для id
         self.callbacks = callbacks
         self.setupUi(self)
         self.session = get_session()
         self.seller = self.session.query(Seller).where(Seller.user_id == current_user.user_id).one()
-
-        self.push_button_close.clicked.connect(lambda: self.close())  # Закрытие окна
-        self.comboBox.activated.connect(self.activated)  # Вызов функции activated
+        self.push_button_close.clicked.connect(lambda: self.close()) #Закрытие окна
+        self.comboBox.activated.connect(self.activated) # Вызов функции activated
 
     def activated(self, index):
         self.tableWidget.setRowCount(0)
@@ -79,102 +78,116 @@ class LotAdd(QWidget, UiAddLotForm):
                 self.tableWidget.setItem(rowPosition, 0, QTableWidgetItem(i.PU_name))  # Заполняем название
                 self.tableWidget.setItem(rowPosition, 1, QTableWidgetItem(f"{i.watt} Вт"))
                 self.component_id_dict[rowPosition] = i.PU_id
-        self.push_button_create.clicked.connect(self.create_lot)
+        if index != 0:
+            self.push_button_create.clicked.connect(self.create_lot)
 
     def create_lot(self):
-        component = self.comboBox.currentIndex()  # Что выводим CPU, GPU или что-то другое
-        if component == 1:  # Создание лота CPU
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                          price=self.line_edit_price.text(),
-                          GPU_id=None,
-                          CPU_id=self.component_id_dict[self.tableWidget.currentRow()],
-                          MB_id=None,
-                          RAM_id=None,
-                          PU_id=None,
-                          mem_id=None,
-                          cooler_id=None,
-                          count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 2:  # Создание лота MB
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=None,
-                         CPU_id=None,
-                         MB_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         RAM_id=None,
-                         PU_id=None,
-                         mem_id=None,
-                         cooler_id=None,
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 3:  # Создание лота GPU
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         CPU_id=None,
-                         MB_id=None,
-                         RAM_id=None,
-                         PU_id=None,
-                         mem_id=None,
-                         cooler_id=None,
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 4:  # Создание лота GPU
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=None,
-                         CPU_id=None,
-                         MB_id=None,
-                         RAM_id=None,
-                         PU_id=None,
-                         mem_id=None,
-                         cooler_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 5:  # Создание лота RAM
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=None,
-                         CPU_id=None,
-                         MB_id=None,
-                         RAM_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         PU_id=None,
-                         mem_id=None,
-                         cooler_id=None,
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 6:  # Создание лота RAM
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=None,
-                         CPU_id=None,
-                         MB_id=None,
-                         RAM_id=None,
-                         PU_id=None,
-                         mem_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         cooler_id=None,
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        elif component == 7:  # Создание лота PU
-            new_lot = Lot(seller_id=self.seller.seller_id,
-                         price=self.line_edit_price.text(),
-                         GPU_id=None,
-                         CPU_id=None,
-                         MB_id=None,
-                         RAM_id=None,
-                         PU_id=self.component_id_dict[self.tableWidget.currentRow()],
-                         mem_id=None,
-                         cooler_id=None,
-                         count=self.line_edit_count.text())
-            self.session.add(new_lot)
-            self.session.commit()
-        self.custom_close()
+        if self.tableWidget.currentRow() < 0:
+            dialog = Dialog("Выберите, что продавать!")
+            dialog.exec_()
+            return
+        elif len(self.line_edit_price.text()) == 0:
+            dialog = Dialog("Укажите цену!")
+            dialog.exec_()
+            return
+        elif len(self.line_edit_count.text()) == 0:
+            dialog = Dialog("Укажите количество!")
+            dialog.exec_()
+            return
+        else:
+            component = self.tableWidget.currentRow()
+            if component == 1: # Создание лота CPU
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                              price=self.line_edit_price.text(),
+                              GPU_id=None,
+                              CPU_id=self.component_id_dict[self.tableWidget.currentRow()],
+                              MB_id=None,
+                              RAM_id=None,
+                              PU_id=None,
+                              mem_id=None,
+                              cooler_id=None,
+                              count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 2: # Создание лота MB
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=None,
+                             CPU_id=None,
+                             MB_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             RAM_id=None,
+                             PU_id=None,
+                             mem_id=None,
+                             cooler_id=None,
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 3: # Создание лота GPU
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             CPU_id=None,
+                             MB_id=None,
+                             RAM_id=None,
+                             PU_id=None,
+                             mem_id=None,
+                             cooler_id=None,
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 4: # Создание лота GPU
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=None,
+                             CPU_id=None,
+                             MB_id=None,
+                             RAM_id=None,
+                             PU_id=None,
+                             mem_id=None,
+                             cooler_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 5: # Создание лота RAM
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=None,
+                             CPU_id=None,
+                             MB_id=None,
+                             RAM_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             PU_id=None,
+                             mem_id=None,
+                             cooler_id=None,
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 6: # Создание лота RAM
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=None,
+                             CPU_id=None,
+                             MB_id=None,
+                             RAM_id=None,
+                             PU_id=None,
+                             mem_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             cooler_id=None,
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            elif component == 7: # Создание лота PU
+                new_lot = Lot(seller_id=self.seller.seller_id,
+                             price=self.line_edit_price.text(),
+                             GPU_id=None,
+                             CPU_id=None,
+                             MB_id=None,
+                             RAM_id=None,
+                             PU_id=self.component_id_dict[self.tableWidget.currentRow()],
+                             mem_id=None,
+                             cooler_id=None,
+                             count=self.line_edit_count.text())
+                self.session.add(new_lot)
+                self.session.commit()
+            self.custom_close()
 
 
     def custom_close(self):
