@@ -107,7 +107,7 @@ class LotAdd(QWidget, UiAddLotForm):
         dialog = Dialog("Подтвердите создание лота!")
         ret_value = dialog.exec_()
         if ret_value == QDialog.Accepted:
-            component = self.tableWidget.currentRow()
+            component = self.comboBox.currentIndex()
             if component == 1: # Создание лота CPU
                 new_lot = Lot(seller_id=self.seller.seller_id,
                               price=self.line_edit_price.text(),
