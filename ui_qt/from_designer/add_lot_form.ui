@@ -22,6 +22,11 @@
     <widget class="QComboBox" name="comboBox">
      <item>
       <property name="text">
+       <string>Выберите тип комплектующего</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Процессоры</string>
       </property>
      </item>
@@ -53,11 +58,6 @@
      <item>
       <property name="text">
        <string>Блоки питания</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
       </property>
      </item>
     </widget>
