@@ -23,8 +23,11 @@ class Registration(QWidget, UiRegistrationForm):
             dialog = Dialog("Неправильно введены данные!")
             dialog.exec_()
             return
-        # users = self.session.query(User).all()
-        # if login in [user.user_login for user in users] and password in [user.user_password for user in users]:
+        if len(login) > 31 or len(password) > 31:
+            dialog = Dialog("Превышен допустимый размер!")
+            dialog.exec_()
+            return
+
         user = self.session.query(User).where(User.user_login == login, User.user_password == password).first()
         if user is not None:
             self.custom_close(user)
