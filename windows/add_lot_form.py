@@ -147,7 +147,7 @@ class LotAdd(QWidget, UiAddLotForm):
                              count=self.spinBox.value())
                 self.session.add(new_lot)
                 self.session.commit()
-            elif component == 4: # Создание лота GPU
+            elif component == 4: # Создание лота cooler
                 new_lot = Lot(seller_id=self.seller.seller_id,
                              price=self.line_edit_price.text(),
                              GPU_id=None,
@@ -173,7 +173,7 @@ class LotAdd(QWidget, UiAddLotForm):
                              count=self.spinBox.value())
                 self.session.add(new_lot)
                 self.session.commit()
-            elif component == 6: # Создание лота RAM
+            elif component == 6: # Создание лота memory
                 new_lot = Lot(seller_id=self.seller.seller_id,
                              price=self.line_edit_price.text(),
                              GPU_id=None,

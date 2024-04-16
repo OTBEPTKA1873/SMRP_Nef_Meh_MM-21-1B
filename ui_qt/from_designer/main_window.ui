@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
-    <height>580</height>
+    <width>849</width>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,88 @@
     <normaloff>logo.png</normaloff>logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="push_button_sort">
-      <property name="text">
-       <string>Проверка совместимости</string>
-      </property>
-     </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="push_button_sort">
+        <property name="text">
+         <string>Проверка совместимости</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="componentBox">
+        <item>
+         <property name="text">
+          <string>Что сортировать</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Процессоры</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Материнская плата</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Видеокарта</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Кулер</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Оперативная память</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Накопители памяти</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Блок питания</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="parametrBox">
+        <item>
+         <property name="text">
+          <string>Характеристика</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="valueBox">
+        <item>
+         <property name="text">
+          <string>Значение</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Сортировать</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item>
+    <item row="1" column="0">
      <widget class="QTableWidget" name="tableWidget">
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
@@ -82,7 +155,7 @@
       </column>
      </widget>
     </item>
-    <item>
+    <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="push_button_create">
@@ -100,14 +173,14 @@
       </item>
      </layout>
     </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QPushButton" name="push_button_receipts">
       <property name="text">
        <string>История Ваших сделок</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="4" column="0">
      <widget class="QPushButton" name="push_button_register">
       <property name="text">
        <string>Войти под другим аккаунтом</string>
@@ -121,8 +194,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>790</width>
-     <height>26</height>
+     <width>849</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
