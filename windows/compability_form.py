@@ -3,21 +3,19 @@ from typing import Iterable, Callable
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem
 
 from ORM import get_session, CPU, MB, GPU, Cooler, RAM
-from ui_qt import UiAddLotForm
+from ui_qt import UiCompability
 
 
-class Compability(QWidget, UiAddLotForm):
+class Compability(QWidget, UiCompability):
 
-    def __init__(self, callbacks: Iterable[Callable]):
+    def __init__(self):
         super().__init__()
 
         self.component_id_dict = {}  # Создаем словарь для id
-        self.callbacks = callbacks
         self.setupUi(self)
         self.session = get_session()
         self.index = 0
 
-        self.push_button_close.clicked.connect(lambda: self.close())  # Закрытие окна
         self.componentBox.connect(self.activated)
         self.compo.activated.connect(self.activated)  # Вызов функции activated
         self.pushButton.clicked.connect(self.check_compability)
@@ -173,6 +171,4 @@ class Compability(QWidget, UiAddLotForm):
         self.custom_close()
 
     def custom_close(self):
-        for callback in self.callbacks:
-            callback()
         self.close()

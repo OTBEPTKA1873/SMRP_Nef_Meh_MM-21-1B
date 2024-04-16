@@ -98,8 +98,6 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window.show()
 
     def compability(self):
-        if self.current_user is None:
-            self.open_register()
-            return
-        self.create_window = Compability()
-        self.create_window.show()
+        # self.create_window = Compability()
+        # self.create_window.show()
+        ...
