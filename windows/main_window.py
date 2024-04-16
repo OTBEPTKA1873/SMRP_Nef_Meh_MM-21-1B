@@ -8,6 +8,7 @@ from .add_lot_form import LotAdd
 from .buy_lot_form import LotBuy
 from .update_lot_form import LotUpdate
 from .receipts_form import Receipts
+from .compability_form import Compability
 
 
 class MainWindow(QMainWindow, UiMainWindow):
@@ -25,7 +26,7 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.push_button_buy.clicked.connect(self.open_lot_buy)
         self.tableWidget.cellDoubleClicked.connect(self.open_lot_update)
         self.push_button_receipts.clicked.connect(self.open_receipts)
-        self.push_button_sort.clicked.connect(self.open_sort)
+        self.push_button_sort.clicked.connect(self.compability)
         self.tableWidget.cellClicked.connect(self.table_widget_cell_clicked)
         self.tableWidget.horizontalHeader().setSectionResizeMode(3)
 
@@ -96,6 +97,6 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window = Receipts(self.current_user)
         self.create_window.show()
 
-    def open_sort(self):
-        dialog = Dialog("А Вы думали, что здесь что-нибудь будет?")
-        dialog.exec_()
+    def compability(self):
+        self.create_window = Compability()
+        self.create_window.show()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'from_designer/compability.ui'
+# Form implementation generated from reading ui file 'compability.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(469, 346)
+        Form.resize(681, 372)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.componentBox = QtWidgets.QComboBox(Form)
@@ -24,19 +24,26 @@ class Ui_Form(object):
         self.componentBox.addItem("")
         self.componentBox.addItem("")
         self.componentBox.addItem("")
-        self.gridLayout.addWidget(self.componentBox, 0, 0, 1, 1)
-        self.text_label = QtWidgets.QLabel(Form)
-        self.text_label.setObjectName("text_label")
-        self.gridLayout.addWidget(self.text_label, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.componentBox, 0, 0, 1, 2)
         self.componentTable = QtWidgets.QTableWidget(Form)
+        self.componentTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.componentTable.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.componentTable.setObjectName("componentTable")
-        self.componentTable.setColumnCount(0)
+        self.componentTable.setColumnCount(1)
         self.componentTable.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.componentTable.setHorizontalHeaderItem(0, item)
+        self.componentTable.horizontalHeader().setDefaultSectionSize(200)
+        self.componentTable.horizontalHeader().setStretchLastSection(True)
         self.gridLayout.addWidget(self.componentTable, 1, 0, 1, 1)
         self.mbTable = QtWidgets.QTableWidget(Form)
         self.mbTable.setObjectName("mbTable")
-        self.mbTable.setColumnCount(0)
+        self.mbTable.setColumnCount(1)
         self.mbTable.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.mbTable.setHorizontalHeaderItem(0, item)
+        self.mbTable.horizontalHeader().setDefaultSectionSize(200)
+        self.mbTable.horizontalHeader().setStretchLastSection(True)
         self.gridLayout.addWidget(self.mbTable, 1, 1, 1, 1)
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setObjectName("pushButton")
@@ -47,11 +54,14 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Совместимость"))
         self.componentBox.setItemText(0, _translate("Form", "Выберите тип комплектующего"))
         self.componentBox.setItemText(1, _translate("Form", "Центральный процессор"))
         self.componentBox.setItemText(2, _translate("Form", "Видеокарта"))
         self.componentBox.setItemText(3, _translate("Form", "Оперативная память"))
         self.componentBox.setItemText(4, _translate("Form", "Кулер"))
-        self.text_label.setText(_translate("Form", "Материнская плата"))
-        self.pushButton.setText(_translate("Form", "Проверка совместимости"))
+        item = self.componentTable.horizontalHeaderItem(0)
+        item.setText(_translate("Form", "Комплектующие"))
+        item = self.mbTable.horizontalHeaderItem(0)
+        item.setText(_translate("Form", "Материнская плата"))
+        self.pushButton.setText(_translate("Form", "Проверить совместимость"))
