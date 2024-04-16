@@ -5,3 +5,4 @@ from .ui_update_lot_form import Ui_Form as UiUpdateLotForm
 from .ui_registration_form import Ui_Form as UiRegistrationForm
 from .ui_receipts_form import Ui_Form as UiReceiptsForm
 from .ui_dialog import Ui_Dialog as UiDialog
+from .ui_compability import Ui_Form as UiCompability

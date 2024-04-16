@@ -22,7 +22,7 @@
     <item>
      <widget class="QPushButton" name="push_button_sort">
       <property name="text">
-       <string>Сортировка</string>
+       <string>Проверка совместимости</string>
       </property>
      </widget>
     </item>

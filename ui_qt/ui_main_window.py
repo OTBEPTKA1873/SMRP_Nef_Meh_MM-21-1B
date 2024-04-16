@@ -80,7 +80,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Магазин"))
-        self.push_button_sort.setText(_translate("MainWindow", "Сортировка"))
+        self.push_button_sort.setText(_translate("MainWindow", "Проверка совместимости"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "id"))
         item = self.tableWidget.horizontalHeaderItem(1)

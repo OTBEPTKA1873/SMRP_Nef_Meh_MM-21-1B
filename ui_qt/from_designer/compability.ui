@@ -18,6 +18,11 @@
     <widget class="QComboBox" name="componentBox">
      <item>
       <property name="text">
+       <string>Выберите тип комплектующего</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Центральный процессор</string>
       </property>
      </item>
