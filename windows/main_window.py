@@ -98,6 +98,5 @@ class MainWindow(QMainWindow, UiMainWindow):
         self.create_window.show()
 
     def compability(self):
-        # self.create_window = Compability()
-        # self.create_window.show()
-        ...
+        self.create_window = Compability()
+        self.create_window.show()
