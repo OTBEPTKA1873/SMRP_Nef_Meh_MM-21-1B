@@ -274,6 +274,37 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cpu in cpus:
                             if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
                                 self.sort_lot(lot)
+            # if self.parametrBox.currentIndex() == 3: # CPU___Сокет
+            #     if self.valueBox.currentIndex() == 1: # freq <2000
+            #         cpus = self.session.query(CPU).where(CPU.freq <= 2000).all()
+            #         for lot in lots:
+            #             for cpu in cpus:
+            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+            #                     self.sort_lot(lot)
+            #     elif self.valueBox.currentIndex() == 2: # freq 2000-2500
+            #         cpus = self.session.query(CPU).where(CPU.freq >= 2000).where(CPU.freq <= 2500).all()
+            #         for lot in lots:
+            #             for cpu in cpus:
+            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+            #                     self.sort_lot(lot)
+            #     elif self.valueBox.currentIndex() == 3: # freq 2500-3000
+            #         cpus = self.session.query(CPU).where(CPU.freq >= 2500).where(CPU.freq <= 3000).all()
+            #         for lot in lots:
+            #             for cpu in cpus:
+            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+            #                     self.sort_lot(lot)
+            #     elif self.valueBox.currentIndex() == 4: # freq 3000-3500
+            #         cpus = self.session.query(CPU).where(CPU.freq >= 3000).where(CPU.freq <= 3500).all()
+            #         for lot in lots:
+            #             for cpu in cpus:
+            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+            #                     self.sort_lot(lot)
+            #     elif self.valueBox.currentIndex() == 5: # freq >3500
+            #         cpus = self.session.query(CPU).where(CPU.freq >= 3500).all()
+            #         for lot in lots:
+            #             for cpu in cpus:
+            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+            #                     self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
         row_position = self.tableWidget.rowCount()
