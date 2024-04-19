@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
-from ORM import get_session, Lot, User, CPU, MB
+from ORM import get_session, Lot, User, CPU, MB, GPU
 from ui_qt import UiMainWindow
 from .dialog import Dialog
 from .registration_form import Registration
@@ -165,10 +165,10 @@ class MainWindow(QMainWindow, UiMainWindow):
                     self.valueBox.addItems(
                         list("<2000 Гц * 2000-2500 Гц * 2500-3000 Гц * 3000-3500 Гц * >3500 Гц".split(" * ")))
                 elif index == 2:  # Число ядер
-                    self.valueBox.addItems(list("<6 * 6-8 * 8-10 * 10-12 * >12".split(" * ")))
+                    self.valueBox.addItems(list("<2000 * 2000-3000 * 3000-4000 * 4000-6000 * >6000".split(" * ")))
                 elif index == 3:  # Объем памяти
                     self.valueBox.addItems(
-                        list("0-4 Гб * 4-8 Гб * 8-16 Гб * >16 Гб".split(" * ")))
+                        list("<4 Гб * 4-8 Гб * 8-16 Гб * >16 Гб".split(" * ")))
                 elif index == 4: # Тип видеокарты
                     self.valueBox.addItems(list("PCI-E 2.0 * PCI-E 3.0 * PCI-E 4.0".split(" * ")))
         elif self.componentBox.currentIndex() == 4:  # cooler
@@ -240,7 +240,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cpu in cpus:
                             if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
                                 self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 2: # CPU___freq
+            elif self.parametrBox.currentIndex() == 2: # CPU___freq
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1: # freq <2000
                     cpus = self.session.query(CPU).where(CPU.freq <= 2000).all()
@@ -272,7 +272,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cpu in cpus:
                             if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
                                 self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 3: # CPU___Сокет
+            elif self.parametrBox.currentIndex() == 3: # CPU___Сокет
                 # Уровень Значений
                 cpus = self.session.query(CPU).all()
                 if self.valueBox.currentIndex() == 1: # LGA
@@ -293,33 +293,33 @@ class MainWindow(QMainWindow, UiMainWindow):
                             if not("AM" in cpu.socket or "LGA" in cpu.socket):
                                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
                                     self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 4: # CPU___TDP
+            elif self.parametrBox.currentIndex() == 4: # CPU___TDP
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1:  # TDP <70
                     cpus = self.session.query(CPU).where(CPU.TDP <= 70).all()
                     for lot in lots:
                         for cpu in cpus:
-                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                            if lot.CPU_id == cpu.CPU_id:
                                 self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 2:  # TDP 70-110
                     cpus = self.session.query(CPU).where(CPU.TDP >= 70).where(CPU.TDP <= 90).all()
                     for lot in lots:
                         for cpu in cpus:
-                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                            if lot.CPU_id == cpu.CPU_id:
                                 self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 3:  # TDP 90-110
                     cpus = self.session.query(CPU).where(CPU.TDP >= 90).where(CPU.TDP <= 110).all()
                     for lot in lots:
                         for cpu in cpus:
-                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                            if lot.CPU_id == cpu.CPU_id:
                                 self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 4:  # TDP >110
                     cpus = self.session.query(CPU).where(CPU.TDP >= 110).all()
                     for lot in lots:
                         for cpu in cpus:
-                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                            if lot.CPU_id == cpu.CPU_id:
                                 self.sort_lot(lot)
-        if self.componentBox.currentIndex() == 2:  # MB
+        elif self.componentBox.currentIndex() == 2:  # MB
             # Уровень характеристик
             if self.parametrBox.currentIndex() == 1: # MB___form-factor
                 # Уровень Значений
@@ -328,60 +328,60 @@ class MainWindow(QMainWindow, UiMainWindow):
                     for lot in lots:
                         for mb in mbs:
                             if "Mini-ITX" in mb.form_factor:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 2: # Micro-ATX
                     for lot in lots:
                         for mb in mbs:
                             if "Micro-ATX" in mb.form_factor:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 3: # ATX
                     for lot in lots:
                         for mb in mbs:
                             if "ATX" in mb.form_factor:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 4: # EATX
                     for lot in lots:
                         for mb in mbs:
                             if "EATX" in mb.form_factor:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 2: # MB___RAM
+            elif self.parametrBox.currentIndex() == 2: # MB___RAM
                 # Уровень Значений
                 mbs = self.session.query(MB).all()
                 if self.valueBox.currentIndex() == 1: # DDR
                     for lot in lots:
                         for mb in mbs:
                             if "DDR" == mb.RAM_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 2: # DDR2
                     for lot in lots:
                         for mb in mbs:
                             if "DDR2" == mb.RAM_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 3: # DDR3
                     for lot in lots:
                         for mb in mbs:
                             if "DDR3" == mb.RAM_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 4: # DDR4
                     for lot in lots:
                         for mb in mbs:
                             if "DDR4" == mb.RAM_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 5: # DDR5
                     for lot in lots:
                         for mb in mbs:
                             if "DDR5" == mb.RAM_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 3: # MB___freq
+            elif self.parametrBox.currentIndex() == 3: # MB___freq
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1: # freq <2000
                     mbs = self.session.query(MB).where(MB.freq <= 2000).all()
@@ -413,7 +413,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for mb in mbs:
                             if lot.MB_id == mb.MB_id: # Проверка на то, что в лоте именно CPU
                                 self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 4: # MB___GPU
+            elif self.parametrBox.currentIndex() == 4: # MB___GPU
                 # Уровень Значений
                 mbs = self.session.query(MB).all()
                 if self.valueBox.currentIndex() == 1: # PCI-E 2.0
@@ -426,13 +426,126 @@ class MainWindow(QMainWindow, UiMainWindow):
                     for lot in lots:
                         for mb in mbs:
                             if "PCI-E 3.0" == mb.GPU_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
                 elif self.valueBox.currentIndex() == 3: # PCI-E 4.0
                     for lot in lots:
                         for mb in mbs:
                             if "PCI-E 4.0" == mb.GPU_type:
-                                if lot.MB_id == mb.MB_id:  # Проверка на то, что в лоте именно CPU
+                                if lot.MB_id == mb.MB_id:
+                                    self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 3:  # GPU
+            # Уровень характеристик
+            if self.parametrBox.currentIndex() == 1:  # GPU___freq
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # freq <2000
+                    gpus = self.session.query(GPU).where(GPU.freq <= 2000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # freq 2000-2500
+                    gpus = self.session.query(GPU).where(GPU.freq >= 2000).where(GPU.freq <= 2500).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # freq 2500-3000
+                    gpus = self.session.query(GPU).where(GPU.freq >= 2500).where(GPU.freq <= 3000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # freq 3000-3500
+                    gpus = self.session.query(GPU).where(GPU.freq >= 3000).where(GPU.freq <= 3500).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 5:  # freq >3500
+                    gpus = self.session.query(GPU).where(GPU.freq >= 3500).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+            elif self.parametrBox.currentIndex() == 2:  # GPU___ALU
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # ALU <2000
+                    gpus = self.session.query(GPU).where(GPU.ALU <= 2000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # ALU 2000-3000
+                    gpus = self.session.query(GPU).where(GPU.ALU >= 2000).where(GPU.ALU <= 3000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # ALU 3000-4000
+                    gpus = self.session.query(GPU).where(GPU.ALU >= 3000).where(GPU.ALU <= 4000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # ALU 4000-6000
+                    gpus = self.session.query(GPU).where(GPU.ALU >= 4000).where(GPU.ALU <= 6000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 5:  # ALU >6000
+                    gpus = self.session.query(GPU).where(GPU.ALU >=6000).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+            elif self.parametrBox.currentIndex() == 3:  # GPU___Volume
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # volume <4
+                    gpus = self.session.query(GPU).where(GPU.volume <= 4).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # volume 4-8
+                    gpus = self.session.query(GPU).where(GPU.volume >= 4).where(GPU.volume <= 8).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # volume 8-16
+                    gpus = self.session.query(GPU).where(GPU.volume >= 8).where(GPU.volume <= 16).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # volume >16
+                    gpus = self.session.query(GPU).where(GPU.volume >=16).all()
+                    for lot in lots:
+                        for gpu in gpus:
+                            if lot.GPU_id == gpu.GPU_id:
+                                self.sort_lot(lot)
+            elif self.parametrBox.currentIndex() == 4:  # GPU___GPU-type
+                # Уровень Значений
+                gpus = self.session.query(GPU).all()
+                if self.valueBox.currentIndex() == 1:  # PCI-E 2.0
+                    for lot in lots:
+                        for gpu in gpus:
+                            if "PCI-E 2.0" == gpu.GPU_type:
+                                if lot.GPU_id == gpu.GPU_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # PCI-E 3.0
+                    for lot in lots:
+                        for gpu in gpus:
+                            if "PCI-E 3.0" == gpu.GPU_type:
+                                if lot.GPU_id == gpu.GPU_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # PCI-E 4.0
+                    for lot in lots:
+                        for gpu in gpus:
+                            if "PCI-E 4.0" == gpu.GPU_type:
+                                if lot.GPU_id == gpu.GPU_id:
                                     self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
