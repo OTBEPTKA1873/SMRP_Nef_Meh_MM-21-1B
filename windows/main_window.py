@@ -114,10 +114,6 @@ class MainWindow(QMainWindow, UiMainWindow):
             return
 
     def activated(self, index): # Заполнение comboBox с информацией о видах характеристик
-        if index == 0 and self.componentBox.currentIndex() == 0:
-            dialog = Dialog("Предварительно выберите тип комплектующего!")
-            dialog.exec_()
-            return
         self.index = index
         self.parametrBox.clear()
         self.parametrBox.addItems(list("Характеристика".split("*"))) # Кто моему коду ломает ноги?
@@ -138,7 +134,7 @@ class MainWindow(QMainWindow, UiMainWindow):
 
     def parametr(self, index):
         self.index = index
-        if index == 0 and self.componentBox.currentIndex() == 0:
+        if self.componentBox.currentIndex() == 0:
             dialog = Dialog("Предварительно выберите тип комплектующего!")
             dialog.exec_()
             return
@@ -153,7 +149,7 @@ class MainWindow(QMainWindow, UiMainWindow):
             elif index == 3:  # Сокет
                 self.valueBox.addItems(list("LGA сокеты * AM сокеты * Другие сокеты".split(" * ")))
             elif index == 4:
-                self.valueBox.addItems(list(">70 Вт * 70-80 Вт * 80-90 Вт * 90-100 Вт * <100 Вт".split(" * ")))
+                self.valueBox.addItems(list(">70 Вт * 70-90 Вт * 90-110 Вт * <110 Вт".split(" * ")))
         elif self.componentBox.currentIndex() == 2:  # MB
                 if index == 1:  # Форм-фактор
                     self.valueBox.addItems(list("mini-ITX * micro-ATX * ATX * EATX".split(" * ")))
@@ -203,7 +199,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                     self.valueBox.addItems(list("<250 Вт * 250-500 Вт * 500-750 Вт * >750 Вт".split(" * ")))
 
     def sorting_lot(self):
-        if self.componentBox.currentIndex() == 0 or self.parametrBox.currentIndex() == 0 or self.parametrBox.currentIndex() == 0:
+        if self.componentBox.currentIndex() == 0 or self.parametrBox.currentIndex() == 0 or self.valueBox.currentIndex() == 0:
             dialog = Dialog("Выберите все параметры!")
             dialog.exec_()
             return
@@ -274,37 +270,51 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cpu in cpus:
                             if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
                                 self.sort_lot(lot)
-            # if self.parametrBox.currentIndex() == 3: # CPU___Сокет
-            #     if self.valueBox.currentIndex() == 1: # freq <2000
-            #         cpus = self.session.query(CPU).where(CPU.freq <= 2000).all()
-            #         for lot in lots:
-            #             for cpu in cpus:
-            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
-            #                     self.sort_lot(lot)
-            #     elif self.valueBox.currentIndex() == 2: # freq 2000-2500
-            #         cpus = self.session.query(CPU).where(CPU.freq >= 2000).where(CPU.freq <= 2500).all()
-            #         for lot in lots:
-            #             for cpu in cpus:
-            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
-            #                     self.sort_lot(lot)
-            #     elif self.valueBox.currentIndex() == 3: # freq 2500-3000
-            #         cpus = self.session.query(CPU).where(CPU.freq >= 2500).where(CPU.freq <= 3000).all()
-            #         for lot in lots:
-            #             for cpu in cpus:
-            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
-            #                     self.sort_lot(lot)
-            #     elif self.valueBox.currentIndex() == 4: # freq 3000-3500
-            #         cpus = self.session.query(CPU).where(CPU.freq >= 3000).where(CPU.freq <= 3500).all()
-            #         for lot in lots:
-            #             for cpu in cpus:
-            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
-            #                     self.sort_lot(lot)
-            #     elif self.valueBox.currentIndex() == 5: # freq >3500
-            #         cpus = self.session.query(CPU).where(CPU.freq >= 3500).all()
-            #         for lot in lots:
-            #             for cpu in cpus:
-            #                 if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
-            #                     self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 3: # CPU___Сокет
+                cpus = self.session.query(CPU).all()
+                if self.valueBox.currentIndex() == 1: # LGA
+                    for lot in lots:
+                        for cpu in cpus:
+                            if "LGA" in cpu.socket:
+                                if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2: # AM
+                    for lot in lots:
+                        for cpu in cpus:
+                            if "AM" in cpu.socket:
+                                if lot.CPU_id == cpu.CPU_id: # Проверка на то, что в лоте именно CPU
+                                    self.sort_lot(lot)
+                else: # Другие
+                    for lot in lots:
+                        for cpu in cpus:
+                            if not("AM" in cpu.socket or "LGA" in cpu.socket):
+                                if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                                    self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 4:  # CPU___TDP
+                if self.valueBox.currentIndex() == 1:  # TDP <70
+                    cpus = self.session.query(CPU).where(CPU.TDP <= 70).all()
+                    for lot in lots:
+                        for cpu in cpus:
+                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # TDP 70-110
+                    cpus = self.session.query(CPU).where(CPU.TDP >= 70).where(CPU.TDP <= 90).all()
+                    for lot in lots:
+                        for cpu in cpus:
+                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # TDP 90-110
+                    cpus = self.session.query(CPU).where(CPU.TDP >= 90).where(CPU.TDP <= 110).all()
+                    for lot in lots:
+                        for cpu in cpus:
+                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # TDP >110
+                    cpus = self.session.query(CPU).where(CPU.TDP >= 110).all()
+                    for lot in lots:
+                        for cpu in cpus:
+                            if lot.CPU_id == cpu.CPU_id:  # Проверка на то, что в лоте именно CPU
+                                self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
         row_position = self.tableWidget.rowCount()
