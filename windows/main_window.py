@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
-from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM
+from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory
 from ui_qt import UiMainWindow
 from .dialog import Dialog
 from .registration_form import Registration
@@ -715,6 +715,81 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for ram in rams:
                             if lot.RAM_id == ram.RAM_id:
                                     self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 6: # Dudes wednesday
+            # Уровень характеристик
+            if self.parametrBox.currentIndex() == 1:  # Mem___SATA?
+                # Уровень Значений
+                mems = self.session.query(Memory).all()
+                if self.valueBox.currentIndex() == 1:  # HDD 3.5''
+                    for lot in lots:
+                        for mem in mems:
+                            if "HDD / 3.5''" == mem.mem_type:
+                                if lot.mem_id == mem.mem_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # SSD 2.5''
+                    for lot in lots:
+                        for mem in mems:
+                            if "SSD / 2.5''" == mem.mem_type:
+                                if lot.mem_id == mem.mem_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # SSD M.2
+                    for lot in lots:
+                        for mem in mems:
+                            if "SSD / M.2" == mem.mem_type:
+                                if lot.mem_id == mem.mem_id:
+                                    self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 2:  # Mem___Volume
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # volume <=250
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.volume <= 250).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # volume 250-500
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.volume >= 250).where(Memory.volume <= 500).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # volume 500-1000
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.volume >= 500).where(Memory.volume <= 1000).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # volume >=1000
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.volume >= 1000).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 3:  # # Mem___sonic
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # speed <=250
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.speed <= 250).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # speed 250-500
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.speed >= 250).where(Memory.speed <= 500).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # speed 500-1000
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.speed >= 500).where(Memory.speed <= 1000).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # speed >=1000
+                    for lot in lots:
+                        mems = self.session.query(Memory).where(Memory.speed >= 1000).all()
+                        for mem in mems:
+                            if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
         row_position = self.tableWidget.rowCount()
