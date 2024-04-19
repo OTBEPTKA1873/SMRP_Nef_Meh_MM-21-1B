@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
-from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory
+from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM, Memory, PU
 from ui_qt import UiMainWindow
 from .dialog import Dialog
 from .registration_form import Registration
@@ -570,7 +570,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                             if not("LGA" in cooler.socket or "AM" in cooler.socket):
                                 if lot.cooler_id == cooler.cooler_id:
                                     self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 2:  # Cooler___DH
+            elif self.parametrBox.currentIndex() == 2:  # Cooler___DH
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1:  # DH <40
                     coolers = self.session.query(Cooler).where(Cooler.DH <= 40).all()
@@ -596,7 +596,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cooler in coolers:
                             if lot.cooler_id == cooler.cooler_id:
                                 self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 3:  # Cooler___noise
+            elif self.parametrBox.currentIndex() == 3:  # Cooler___noise
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1:  # DH <20
                     coolers = self.session.query(Cooler).where(Cooler.noise <= 20).all()
@@ -738,7 +738,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                             if "SSD / M.2" == mem.mem_type:
                                 if lot.mem_id == mem.mem_id:
                                     self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 2:  # Mem___Volume
+            elif self.parametrBox.currentIndex() == 2:  # Mem___Volume
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1:  # volume <=250
                     for lot in lots:
@@ -764,7 +764,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for mem in mems:
                             if lot.mem_id == mem.mem_id:
                                 self.sort_lot(lot)
-            if self.parametrBox.currentIndex() == 3:  # # Mem___sonic
+            elif self.parametrBox.currentIndex() == 3:  # # Mem___sonic
                 # Уровень Значений
                 if self.valueBox.currentIndex() == 1:  # speed <=250
                     for lot in lots:
@@ -789,6 +789,34 @@ class MainWindow(QMainWindow, UiMainWindow):
                         mems = self.session.query(Memory).where(Memory.speed >= 1000).all()
                         for mem in mems:
                             if lot.mem_id == mem.mem_id:
+                                self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 7: # PU
+            # Уровень характеристик
+            if self.parametrBox.currentIndex() == 1:  # Watt
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # watt <=250
+                    for lot in lots:
+                        pus = self.session.query(PU).where(PU.watt <= 250).all()
+                        for pu in pus:
+                            if lot.PU_id == pu.PU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # watt 250-500
+                    for lot in lots:
+                        pus = self.session.query(PU).where(PU.watt >= 250).where(PU.watt <= 500).all()
+                        for pu in pus:
+                            if lot.PU_id == pu.PU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # watt 500-750
+                    for lot in lots:
+                        pus = self.session.query(PU).where(PU.watt >= 500).where(PU.watt <= 750).all()
+                        for pu in pus:
+                            if lot.PU_id == pu.PU_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # watt >750
+                    for lot in lots:
+                        pus = self.session.query(PU).where(PU.watt >= 750).all()
+                        for pu in pus:
+                            if lot.PU_id == pu.PU_id:
                                 self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
