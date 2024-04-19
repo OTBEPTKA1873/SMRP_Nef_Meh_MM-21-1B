@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
-from ORM import get_session, Lot, User, CPU, MB, GPU
+from ORM import get_session, Lot, User, CPU, MB, GPU, Cooler, RAM
 from ui_qt import UiMainWindow
 from .dialog import Dialog
 from .registration_form import Registration
@@ -319,7 +319,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for cpu in cpus:
                             if lot.CPU_id == cpu.CPU_id:
                                 self.sort_lot(lot)
-        elif self.componentBox.currentIndex() == 2:  # MB
+        elif self.componentBox.currentIndex() == 2: # MB
             # Уровень характеристик
             if self.parametrBox.currentIndex() == 1: # MB___form-factor
                 # Уровень Значений
@@ -434,7 +434,7 @@ class MainWindow(QMainWindow, UiMainWindow):
                             if "PCI-E 4.0" == mb.GPU_type:
                                 if lot.MB_id == mb.MB_id:
                                     self.sort_lot(lot)
-        elif self.componentBox.currentIndex() == 3:  # GPU
+        elif self.componentBox.currentIndex() == 3: # GPU
             # Уровень характеристик
             if self.parametrBox.currentIndex() == 1:  # GPU___freq
                 # Уровень Значений
@@ -546,6 +546,174 @@ class MainWindow(QMainWindow, UiMainWindow):
                         for gpu in gpus:
                             if "PCI-E 4.0" == gpu.GPU_type:
                                 if lot.GPU_id == gpu.GPU_id:
+                                    self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 4: # Cooler
+            # Уровень характеристик
+            if self.parametrBox.currentIndex() == 1:  # Cooler___socket
+                # Уровень Значений
+                coolers = self.session.query(Cooler).all()
+                if self.valueBox.currentIndex() == 1:  # LGA
+                    for lot in lots:
+                        for cooler in coolers:
+                            if "LGA" in cooler.socket:
+                                if lot.cooler_id == cooler.cooler_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # AM
+                    for lot in lots:
+                        for cooler in coolers:
+                            if "AM" in cooler.socket:
+                                if lot.cooler_id == cooler.cooler_id:
+                                    self.sort_lot(lot)
+                else:  # Другие
+                    for lot in lots:
+                        for cooler in coolers:
+                            if not("LGA" in cooler.socket or "AM" in cooler.socket):
+                                if lot.cooler_id == cooler.cooler_id:
+                                    self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 2:  # Cooler___DH
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # DH <40
+                    coolers = self.session.query(Cooler).where(Cooler.DH <= 40).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # DH 40-60
+                    coolers = self.session.query(Cooler).where(Cooler.DH >= 40).where(Cooler.DH <= 60).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # DH 60-80
+                    coolers = self.session.query(Cooler).where(Cooler.DH >= 60).where(Cooler.DH <= 80).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # DH >80
+                    coolers = self.session.query(Cooler).where(Cooler.DH >= 80).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+            if self.parametrBox.currentIndex() == 3:  # Cooler___noise
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # DH <20
+                    coolers = self.session.query(Cooler).where(Cooler.noise <= 20).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # DH 20-30
+                    coolers = self.session.query(Cooler).where(Cooler.noise >= 20).where(Cooler.noise <= 30).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # DH 30-40
+                    coolers = self.session.query(Cooler).where(Cooler.noise >= 30).where(Cooler.noise <= 40).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # DH >40
+                    coolers = self.session.query(Cooler).where(Cooler.noise >= 40).all()
+                    for lot in lots:
+                        for cooler in coolers:
+                            if lot.cooler_id == cooler.cooler_id:
+                                self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 5: # RAM
+            # Уровень характеристик
+            if self.parametrBox.currentIndex() == 1:  # RAM___RAM-type
+                # Уровень Значений
+                rams = self.session.query(RAM).all()
+                if self.valueBox.currentIndex() == 1:  # DDR
+                    for lot in lots:
+                        for ram in rams:
+                            if "DDR" == ram.RAM_type:
+                                if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # DDR2
+                    for lot in lots:
+                        for ram in rams:
+                            if "DDR2" == ram.RAM_type:
+                                if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # DDR3
+                    for lot in lots:
+                        for ram in rams:
+                            if "DDR3" == ram.RAM_type:
+                                if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # DDR4
+                    for lot in lots:
+                        for ram in rams:
+                            if "DDR4" == ram.RAM_type:
+                                if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 5:  # DDR5
+                    for lot in lots:
+                        for ram in rams:
+                            if "DDR5" == ram.RAM_type:
+                                if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+            elif self.parametrBox.currentIndex() == 2:  # RAM___Volume
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # Volume <8
+                    rams = self.session.query(RAM).where(RAM.volume <= 8).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # Volume 8-16
+                    rams = self.session.query(RAM).where(RAM.volume >= 8).where(RAM.volume <= 16).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # Volume 16-32
+                    rams = self.session.query(RAM).where(RAM.volume >= 16).where(RAM.volume <= 32).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # Volume >32
+                    rams = self.session.query(RAM).where(RAM.volume >= 32).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+            elif self.parametrBox.currentIndex() == 3:  # RAM___freq
+                # Уровень Значений
+                if self.valueBox.currentIndex() == 1:  # freq <2000
+                    rams = self.session.query(RAM).where(RAM.freq <= 2000).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 2:  # freq 2000-2500
+                    rams = self.session.query(RAM).where(RAM.freq >= 2000).where(RAM.freq <= 2500).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 3:  # freq 2500-3000
+                    rams = self.session.query(RAM).where(RAM.freq >= 2500).where(RAM.freq <= 3000).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 4:  # freq 3000-3500
+                    rams = self.session.query(RAM).where(RAM.freq >= 3000).where(RAM.freq <= 3500).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
+                                    self.sort_lot(lot)
+                elif self.valueBox.currentIndex() == 5:  # freq >3500
+                    rams = self.session.query(RAM).where(RAM.freq >= 3500).all()
+                    for lot in lots:
+                        for ram in rams:
+                            if lot.RAM_id == ram.RAM_id:
                                     self.sort_lot(lot)
 
     def sort_lot(self, lot: Lot):
