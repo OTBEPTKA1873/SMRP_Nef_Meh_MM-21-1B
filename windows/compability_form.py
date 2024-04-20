@@ -54,7 +54,6 @@ class Compability(QWidget, UiCompability):
                 self.componentTable.setItem(rowPosition, 0, QTableWidgetItem(i.cooler_name))
                 self.component_id_dict[rowPosition] = i.cooler_id
 
-
     def check_compability(self):
         self.mbTable.setRowCount(0)
         if self.componentTable.currentRow() < 0:
