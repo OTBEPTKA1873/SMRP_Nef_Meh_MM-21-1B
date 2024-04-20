@@ -199,12 +199,58 @@ class MainWindow(QMainWindow, UiMainWindow):
                     self.valueBox.addItems(list("<250 Вт * 250-500 Вт * 500-750 Вт * >750 Вт".split(" * ")))
 
     def sorting_lot(self):
-        if self.componentBox.currentIndex() == 0 or self.parametrBox.currentIndex() == 0 or self.valueBox.currentIndex() == 0:
-            dialog = Dialog("Выберите все параметры!")
-            dialog.exec_()
-            return
         self.tableWidget.setRowCount(0) # Чистим таблицу от не нужного
         lots = self.session.query(Lot).where(Lot.count > 0).all()  # Проверяем лоты на сущ.
+        if self.componentBox.currentIndex() != 0 and self.parametrBox.currentIndex() == 0 and self.valueBox.currentIndex() == 0:
+            if self.componentBox.currentIndex() == 1:
+                cpus = self.session.query(CPU).all()
+                for lot in lots:
+                    for cpu in cpus:
+                        if lot.CPU_id == cpu.CPU_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 2:
+                mbs = self.session.query(MB).all()
+                for lot in lots:
+                    for mb in mbs:
+                        if lot.MB_id == mb.MB_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 3:
+                gpus = self.session.query(GPU).all()
+                for lot in lots:
+                    for gpu in gpus:
+                        if lot.GPU_id == gpu.GPU_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 4:
+                coolers = self.session.query(Cooler).all()
+                for lot in lots:
+                    for cooler in coolers:
+                        if lot.cooler_id == cooler.cooler_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 5:
+                rams = self.session.query(RAM).all()
+                for lot in lots:
+                    for ram in rams:
+                        if lot.RAM_id == ram.RAM_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 6:
+                mems = self.session.query(Memory).all()
+                for lot in lots:
+                    for mem in mems:
+                        if lot.RAM_id == mem.RAM_id:
+                            self.sort_lot(lot)
+            elif self.componentBox.currentIndex() == 7:
+                pus = self.session.query(PU).all()
+                for lot in lots:
+                    for pu in pus:
+                        if lot.PU_id == pu.PU_id:
+                            self.sort_lot(lot)
+        elif self.componentBox.currentIndex() == 0 or self.parametrBox.currentIndex() == 0 or self.valueBox.currentIndex() == 0:
+            dialog = Dialog("Выберите все параметры!")
+            for lot in lots:
+                if lot.count > 0:
+                    self.sort_lot(lot)
+            dialog.exec_()
+            return
         # Уровень комплектующего
         if self.componentBox.currentIndex() == 1: # CPU
             # Уровень характеристик
