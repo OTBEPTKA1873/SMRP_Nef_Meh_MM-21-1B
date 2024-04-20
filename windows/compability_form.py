@@ -22,6 +22,7 @@ class Compability(QWidget, UiCompability):
     def activated(self, index):
         self.index = index
         self.componentTable.setRowCount(0)
+        self.mbTable.setRowCount(0)
         self.component_id_dict.clear()
         if index == 1:
             cpu = self.session.query(CPU).all()
