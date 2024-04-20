@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem
 
-from ORM import get_session, CPU, MB, GPU, Cooler, RAM
+from ORM import get_session, CPU, GPU, Cooler, RAM, MB, CPU_MB, GPU_MB, Cooler_MB, RAM_MB
 from ui_qt import UiCompability
 from .dialog import Dialog
 
@@ -23,6 +23,7 @@ class Compability(QWidget, UiCompability):
         self.index = index
         self.componentTable.setRowCount(0)
         self.mbTable.setRowCount(0)
+        self.component_id_dict.clear()
         self.component_id_dict.clear()
         if index == 1:
             cpu = self.session.query(CPU).all()
@@ -60,29 +61,35 @@ class Compability(QWidget, UiCompability):
             dialog = Dialog("Выберите к чему подбирать материнскую плату!")
             dialog.exec_()
             return
-        component = self.componentBox.currentIndex()
-        mb = self.session.query(MB).all()
-        if component == 1:  # Проверка CPU
-            for i in mb:
-                if self.session.query(CPU).get(self.component_id_dict[self.componentTable.currentRow()]).socket == i.socket_type:
+        if self.componentBox.currentIndex() == 1:  # Проверка CPU
+            cpu_mbs = self.session.query(CPU_MB).where(CPU_MB.CPU_id == self.component_id_dict[self.componentTable.currentRow()])
+            for i in cpu_mbs:
+                mbs = self.session.query(MB.MB_name).where(MB.MB_id == i.MB_id).all()
+                for j in mbs:
                     rowPosition = self.mbTable.rowCount()
                     self.mbTable.insertRow(rowPosition)  # Создание строчки
-                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))
-        elif component == 2:  # Проверка GPU
-            for i in mb:
-                if self.session.query(GPU).get(self.component_id_dict[self.componentTable.currentRow()]).GPU_type == i.GPU_type:
+                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(j[0]))
+        elif self.componentBox.currentIndex() == 2:  # Проверка GPU
+            gpu_mbs = self.session.query(GPU_MB).where(GPU_MB.GPU_id == self.component_id_dict[self.componentTable.currentRow()])
+            for i in gpu_mbs:
+                mbs = self.session.query(MB.MB_name).where(MB.MB_id == i.MB_id).all()
+                for j in mbs:
                     rowPosition = self.mbTable.rowCount()
                     self.mbTable.insertRow(rowPosition)  # Создание строчки
-                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))
-        elif component == 3:  # Проверка RAM
-            for i in mb:
-                if self.session.query(RAM).get(self.component_id_dict[self.componentTable.currentRow()]).RAM_type == i.RAM_type:
+                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(j[0]))
+        elif self.componentBox.currentIndex() == 3:  # Проверка RAM
+            ram_mbs = self.session.query(RAM_MB).where(RAM_MB.RAM_id == self.component_id_dict[self.componentTable.currentRow()])
+            for i in ram_mbs:
+                rams = self.session.query(MB.MB_name).where(MB.MB_id == i.MB_id).all()
+                for j in rams:
                     rowPosition = self.mbTable.rowCount()
                     self.mbTable.insertRow(rowPosition)  # Создание строчки
-                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))
-        elif component == 4:  # Проверка cooler
-            for i in mb:
-                if self.session.query(Cooler).get(self.component_id_dict[self.componentTable.currentRow()]).socket == i.socket_type:
+                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(j[0]))
+        elif self.componentBox.currentIndex() == 4:  # Проверка Cooler
+            cooler_mbs = self.session.query(Cooler_MB).where(Cooler_MB.cooler_id == self.component_id_dict[self.componentTable.currentRow()])
+            for i in cooler_mbs:
+                coolers = self.session.query(MB.MB_name).where(MB.MB_id == i.MB_id).all()
+                for j in coolers:
                     rowPosition = self.mbTable.rowCount()
                     self.mbTable.insertRow(rowPosition)  # Создание строчки
-                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(i.MB_name))
+                    self.mbTable.setItem(rowPosition, 0, QTableWidgetItem(j[0]))
